@@ -1,4 +1,4 @@
-package com.greenlaw110.di_benchmark;
+package com.greenlaw110.di_benchmark.beans;
 
 import org.osgl.$;
 import org.springframework.context.annotation.Scope;
@@ -8,17 +8,15 @@ import javax.inject.Inject;
 
 @Component
 @Scope("prototype")
-public class A {
-    private final B b;
+public class D1 {
 
     @Inject
-    public A(B b) {
-        this.b = b;
+    public D1(E e) {
     }
 
     @Override
     public int hashCode() {
-        return $.hc("a", b);
+        return $.hc("d1");
     }
 
     @Override
@@ -26,12 +24,11 @@ public class A {
         if (obj == this) {
             return true;
         }
-        return (obj instanceof A && $.eq(((A) obj).b, b));
+        return (obj instanceof D1);
     }
 
     @Override
     public String toString() {
         return getClass().getSimpleName();
     }
-
 }

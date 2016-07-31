@@ -1,8 +1,10 @@
 package com.greenlaw110.di_benchmark;
 
 import com.google.inject.Injector;
+import com.greenlaw110.di_benchmark.beans.A;
 import dagger.ObjectGraph;
 import org.codejargon.feather.Feather;
+import org.glassfish.hk2.api.ServiceLocator;
 import org.osgl.inject.Genie;
 import org.picocontainer.MutablePicoContainer;
 import org.springframework.context.ApplicationContext;
@@ -23,6 +25,7 @@ public class RuntimeBenchmark {
         MutablePicoContainer pico = pico();
         Genie genie = genie();
         ApplicationContext spring = spring();
+        ServiceLocator hk2 = hk2();
         for (int i = 0; i < warmup; ++i) {
             feather.instance(A.class);
             genie.get(A.class);
@@ -30,6 +33,7 @@ public class RuntimeBenchmark {
             pico.getComponent(A.class);
             dagger.get(A.class);
             spring.getBean(A.class);
+            hk2().getService(A.class);
         }
         StopWatch.millis("Guice", () -> {
             for (int i = 0; i < iterations; ++i) {

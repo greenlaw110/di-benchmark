@@ -2,6 +2,7 @@ package com.greenlaw110.di_benchmark;
 
 import com.google.inject.Guice;
 import com.google.inject.Injector;
+import com.greenlaw110.di_benchmark.beans.A;
 import dagger.ObjectGraph;
 import org.codejargon.feather.Feather;
 import org.osgl.inject.Genie;

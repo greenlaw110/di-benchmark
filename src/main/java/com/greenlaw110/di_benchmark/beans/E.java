@@ -1,4 +1,4 @@
-package com.greenlaw110.di_benchmark;
+package com.greenlaw110.di_benchmark.beans;
 
 import org.osgl.$;
 import org.springframework.context.annotation.Scope;
