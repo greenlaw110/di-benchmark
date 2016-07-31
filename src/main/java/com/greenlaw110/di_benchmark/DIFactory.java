@@ -33,7 +33,7 @@ public class DIFactory {
     }
 
     public static Genie genie() {
-        return Genie.create();
+        return Genie.createWithoutPlugins();
     }
 
     public static ApplicationContext spring() {

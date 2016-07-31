@@ -13,7 +13,7 @@ import static com.greenlaw110.di_benchmark.DIFactory.*;
  * Measures bootstrap cost of different DI tools.
  * An iteration includes creating an injector and instantiating the dependency graph.
  */
-public class RuntimeBenchmark implements Benchmark {
+public class RuntimeBenchmark {
 
     public void run(final int warmup, final int iterations) {
         benchmarkExplanation(iterations);

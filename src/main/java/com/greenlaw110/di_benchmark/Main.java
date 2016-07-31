@@ -19,11 +19,14 @@ public class Main {
             iteration = Integer.parseInt(s);
         }
         s = conf("type");
-        if (S.neq(s, "runtime")) {
+        if (S.eq(s, "runtime")) {
+            new RuntimeBenchmark().run(warmUp, iteration);
+        }
+        if (S.eq(s, "startup")) {
             new StartupBenchmark().run(warmUp, iteration);
         }
-        if (S.neq(s, "startup")) {
-            new RuntimeBenchmark().run(warmUp, iteration);
+        if (S.eq(s, "split_startup")) {
+            new SplitStartupBenchmark().run(iteration);
         }
     }
 
