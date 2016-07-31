@@ -11,6 +11,8 @@ This project benchmark the following DI solutions:
 
 ## Object Graph
 
+Below is the object graph of the class to be injected in the benchmark program
+
 ```
 Object
 └── A
@@ -80,3 +82,7 @@ For startup benchmark:
 For runtime benchmark:
 
 `mvn clean compile exec:exec -Pruntime -Druntime.iteration=1000 -Druntime.warmup=100`
+
+## Disclaim
+
+The benchmark source code is originated from https://github.com/zsoltherpai/feather/tree/master/performance-test 
