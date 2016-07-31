@@ -40,6 +40,8 @@ Genie	 681 ms
 Spring	 35872 ms
 ```
 
+**Note** Spring startup performance can be improved by disable package scanning. See [below](#a2) for more details
+
 ## Runtime benchmark
 
 Benchmark runtime performance: fetching bean for 500K times, with 1K times warm up:
@@ -83,7 +85,11 @@ For runtime benchmark:
 
 `mvn clean compile exec:exec -Pruntime -Druntime.iteration=1000 -Druntime.warmup=100`
 
-**Note** As per [zapov's advice](https://www.reddit.com/r/java/comments/4vfw57/a_simple_program_benchmark_dependency_injection/), another profile has been added into the project: `split_startup`, which reports the startup and fetch the first component performance respectively, and the new benchmark shows:
+## Amendment 
+
+### Split container startup and first bean load benchmark
+
+As per [zapov's comment](https://www.reddit.com/r/java/comments/4vfw57/a_simple_program_benchmark_dependency_injection/), another profile has been added into the project: `split_startup`, which reports the startup and fetch the first component performance respectively, and the new benchmark shows:
 
 ```
 Split Starting up DI containers & instantiating a dependency graph 4999 times:
@@ -100,6 +106,35 @@ Here is the command the run split startup benchmark:
 
 `mvn clean compile exec:exec -Psplit_startup`
 
+### <a id="a2">Add new benchmark for Spring startup without package scanning</a>
+
+As per [meotau's comment](https://www.reddit.com/r/java/comments/4vfw57/a_simple_program_benchmark_dependency_injection/), I have added a property `springscan` to show Spring's performance without package scanning. The startup and startup split result without package scanning are:
+
+```
+Starting up DI containers & instantiating a dependency graph 4999 times:
+---------------------------------------------------------------------------------------
+Spring scan: disabled
+Guice	 1367 ms
+Feather	 120 ms
+Dagger	 231 ms
+Pico	 601 ms
+Genie	 380 ms
+Spring	 21958 ms
+```
+
+```
+Split Starting up DI containers & instantiating a dependency graph 4999 times:
+---------------------------------------------------------------------------------------
+Spring scan: disabled
+Guice	 start: 656ms, fetch 1147ms
+Feather	 start: 14ms, fetch 122ms
+Dagger	 start: 112ms, fetch 208ms
+Pico	 start: 280ms, fetch 394ms
+Genie	 start: 319ms, fetch 218ms
+Spring	 start: 22367ms, fetch 1886ms
+```
+
+The result shows we can roughly say Spring's container startup speed nearly doubled without package scanning but it is still a way slower than other products. Even though you don't get the performance gain by free, you have to manually construct your object graph and that immediately decrease the usability of Spring.
 
 ## Disclaim
 

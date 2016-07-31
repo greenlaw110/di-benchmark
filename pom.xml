@@ -21,6 +21,7 @@
     <runtime.iteration>499999</runtime.iteration>
     <startup.warmup>200</startup.warmup>
     <startup.iteration>4999</startup.iteration>
+    <springscan>false</springscan>
   </properties>
   <dependencies>
     <dependency>
@@ -148,6 +149,7 @@
                 <argument>-Dwarmup=${startup.warmup}</argument>
                 <argument>-Diteration=${startup.iteration}</argument>
                 <argument>-Dtype=startup</argument>
+                <argument>-Dspring_scan=${springscan}</argument>
                 <argument>com.greenlaw110.di_benchmark.Main</argument>
               </arguments>
             </configuration>
@@ -180,6 +182,7 @@
                 <argument>-Dwarmup=${startup.warmup}</argument>
                 <argument>-Diteration=${startup.iteration}</argument>
                 <argument>-Dtype=split_startup</argument>
+                <argument>-Dspring_scan=${springscan}</argument>
                 <argument>com.greenlaw110.di_benchmark.Main</argument>
               </arguments>
             </configuration>

@@ -5,6 +5,7 @@ import com.google.inject.Injector;
 import dagger.ObjectGraph;
 import org.codejargon.feather.Feather;
 import org.osgl.inject.Genie;
+import org.osgl.util.S;
 import org.picocontainer.MutablePicoContainer;
 import org.springframework.context.ApplicationContext;
 
@@ -18,13 +19,19 @@ public class StartupBenchmark {
 
     public void run(final int warmup, final int iterations) {
         benchmarkExplanation(iterations);
+        boolean springScan = false;
+        String s = System.getProperties().getProperty("spring_scan");
+        if (S.notBlank(s)) {
+            springScan = Boolean.parseBoolean(s);
+        }
+        System.out.printf("Spring scan: %s\n", springScan ? "enabled" : "disabled");
         for (int i = 0; i < warmup; ++i) {
             Feather.with().instance(A.class);
             genie().get(A.class);
             Guice.createInjector().getInstance(A.class);
             pico().getComponent(A.class);
             dagger().get(A.class);
-            spring().getBean(A.class);
+            spring(springScan).getBean(A.class);
         }
         StopWatch.millis("Guice", () -> {
             for (int i = 0; i < iterations; ++i) {
@@ -56,10 +63,12 @@ public class StartupBenchmark {
                 genie.get(A.class);
             }
         });
-        if (iterations < 5000) {
+        int limit = springScan ? 5000 : 10000;
+        if (iterations < limit) {
+            final boolean scan = springScan;
             StopWatch.millis("Spring", () -> {
                 for (int i = 0; i < iterations; ++i) {
-                    ApplicationContext applicationContext = spring();
+                    ApplicationContext applicationContext = spring(scan);
                     applicationContext.getBean(A.class);
                 }
             });

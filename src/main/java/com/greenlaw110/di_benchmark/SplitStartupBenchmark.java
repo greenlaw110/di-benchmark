@@ -5,6 +5,7 @@ import com.google.inject.Injector;
 import dagger.ObjectGraph;
 import org.codejargon.feather.Feather;
 import org.osgl.inject.Genie;
+import org.osgl.util.S;
 import org.picocontainer.MutablePicoContainer;
 import org.springframework.context.ApplicationContext;
 
@@ -18,6 +19,12 @@ public class SplitStartupBenchmark {
 
     public void run(final int iterations) {
         benchmarkExplanation(iterations);
+        boolean springScan = false;
+        String s = System.getProperties().getProperty("spring_scan");
+        if (S.notBlank(s)) {
+            springScan = Boolean.parseBoolean(s);
+        }
+        System.out.printf("Spring scan: %s\n", springScan ? "enabled" : "disabled");
         StopWatch.startAndFetch("Guice", (start, fetch) -> {
             for (int i = 0; i < iterations; ++i) {
                 long ms = System.currentTimeMillis();
@@ -68,11 +75,13 @@ public class SplitStartupBenchmark {
                 fetch.addAndGet(System.currentTimeMillis() - ms2);
             }
         });
-        if (iterations < 5000) {
+        int limit = springScan ? 5000 : 10000;
+        if (iterations < limit) {
+            final boolean scan = springScan;
             StopWatch.startAndFetch("Spring", (start, fetch) -> {
                 for (int i = 0; i < iterations; ++i) {
                     long ms = System.currentTimeMillis();
-                    ApplicationContext applicationContext = spring();
+                    ApplicationContext applicationContext = spring(scan);
                     long ms2 = System.currentTimeMillis();
                     start.addAndGet(ms2 - ms);
                     applicationContext.getBean(A.class);

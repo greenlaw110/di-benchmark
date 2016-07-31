@@ -22,7 +22,7 @@ public class RuntimeBenchmark {
         ObjectGraph dagger = dagger();
         MutablePicoContainer pico = pico();
         Genie genie = genie();
-        ApplicationContext spring = spring();
+        ApplicationContext spring = spring(false);
         for (int i = 0; i < warmup; ++i) {
             feather.instance(A.class);
             genie.get(A.class);
