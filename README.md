@@ -11,6 +11,7 @@ This project benchmark the following DI solutions:
 
 ## Object Graph
 
+```
 Object
 └── A
     └── B
@@ -18,6 +19,7 @@ Object
             ├── D1
             └── D2
                 └── E
+```
 
 All injection is done through Constructor injection
 
