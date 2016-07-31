@@ -8,7 +8,7 @@ public class StopWatch {
         long start = System.currentTimeMillis();
         runnable.run();
         long end = System.currentTimeMillis();
-        System.out.println(String.format("%s\t %s ms", description, end -start));
+        System.out.println(String.format("%8s|%6sms", description, end - start));
     }
 
     interface StartAndFetch {
@@ -19,6 +19,6 @@ public class StopWatch {
         AtomicLong startup = new AtomicLong(0);
         AtomicLong fetch = new AtomicLong(0);
         runnable.run(startup, fetch);
-        System.out.println(String.format("%s\t start: %sms, fetch %sms", description, startup.get(), fetch.get()));
+        System.out.println(String.format("%8s| start:%6sms   fetch:%6sms", description, startup.get(), fetch.get()));
     }
 }

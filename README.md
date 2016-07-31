@@ -32,15 +32,19 @@ Benchmark Starting up DI containers & instantiating a dependency graph performan
 ```text
 Starting up DI containers & instantiating a dependency graph 4999 times:
 ---------------------------------------------------------------------------------------
-Guice	 1392 ms
-Feather	 128 ms
-Dagger	 213 ms
-Pico	 622 ms
-Genie	 681 ms
-Spring	 35872 ms
+Spring scan: enabled
+   Guice|  1921ms
+ Feather|   120ms
+  Dagger|   269ms
+    Pico|   743ms
+   Genie|   416ms
+  Spring| 43535ms
 ```
 
-**Note** Spring startup performance can be improved by disable package scanning. See [below](#a2) for more details
+**Note**
+
+1. An [amendment](#a1) has been implemented to split the container startup time and the first bean fetching time
+2. Spring startup performance can be improved by disable package scanning. See [below](#a2) for more details
 
 ## Runtime benchmark
 
@@ -49,12 +53,12 @@ Benchmark runtime performance: fetching bean for 500K times, with 1K times warm 
 ```text
 Runtime benchmark, fetch bean for 499999 times:
 --------------------------------------------------
-Guice	 559 ms
-Feather	 241 ms
-Dagger	 152 ms
-Genie	 162 ms
-Pico	 1946 ms
-Spring	 25809 ms
+   Guice|   719ms
+ Feather|   284ms
+  Dagger|   146ms
+   Genie|   177ms
+    Pico|  2057ms
+  Spring| 22024ms
 ```
 
 ## How to run the benchmark
@@ -87,19 +91,20 @@ For runtime benchmark:
 
 ## Amendment 
 
-### Split container startup and first bean load benchmark
+### <a id="a1">Split container startup and first bean load benchmark</a>
 
 As per [zapov's comment](https://www.reddit.com/r/java/comments/4vfw57/a_simple_program_benchmark_dependency_injection/), another profile has been added into the project: `split_startup`, which reports the startup and fetch the first component performance respectively, and the new benchmark shows:
 
 ```
 Split Starting up DI containers & instantiating a dependency graph 4999 times:
 ---------------------------------------------------------------------------------------
-Guice	 start: 675ms, fetch 1173ms
-Feather	 start: 10ms, fetch 126ms
-Dagger	 start: 75ms, fetch 171ms
-Pico	 start: 267ms, fetch 322ms
-Genie	 start: 331ms, fetch 229ms
-Spring	 start: 33947ms, fetch 5088ms
+Spring scan: enabled
+   Guice| start:   831ms   fetch:  1387ms
+ Feather| start:    10ms   fetch:   147ms
+  Dagger| start:    96ms   fetch:   238ms
+    Pico| start:   307ms   fetch:   356ms
+   Genie| start:   348ms   fetch:   234ms
+  Spring| start: 40671ms   fetch:  2024ms
 ```
 
 Here is the command the run split startup benchmark:
@@ -114,28 +119,28 @@ As per [meotau's comment](https://www.reddit.com/r/java/comments/4vfw57/a_simple
 Starting up DI containers & instantiating a dependency graph 4999 times:
 ---------------------------------------------------------------------------------------
 Spring scan: disabled
-Guice	 1367 ms
-Feather	 120 ms
-Dagger	 231 ms
-Pico	 601 ms
-Genie	 380 ms
-Spring	 21958 ms
+   Guice|  2071ms
+ Feather|   144ms
+  Dagger|   296ms
+    Pico|   788ms
+   Genie|   616ms
+  Spring| 24286ms
 ```
 
 ```
 Split Starting up DI containers & instantiating a dependency graph 4999 times:
 ---------------------------------------------------------------------------------------
 Spring scan: disabled
-Guice	 start: 656ms, fetch 1147ms
-Feather	 start: 14ms, fetch 122ms
-Dagger	 start: 112ms, fetch 208ms
-Pico	 start: 280ms, fetch 394ms
-Genie	 start: 319ms, fetch 218ms
-Spring	 start: 22367ms, fetch 1886ms
+   Guice| start:   929ms   fetch:  1655ms
+ Feather| start:    15ms   fetch:   173ms
+  Dagger| start:   133ms   fetch:   333ms
+    Pico| start:   385ms   fetch:   477ms
+   Genie| start:   594ms   fetch:   333ms
+  Spring| start: 26284ms   fetch:  2156ms
 ```
 
 The result shows we can roughly say Spring's container startup speed nearly doubled without package scanning but it is still a way slower than other products. Even though you don't get the performance gain by free, you have to manually construct your object graph and that immediately decrease the usability of Spring.
 
 ## Disclaim
 
-The benchmark source code is originated from https://github.com/zsoltherpai/feather/tree/master/performance-test 
+The benchmark source code is originated from https://github.com/zsoltherpai/feather/tree/master/performance-test and adapted by [Gelin Luo](https://github.com/greenlaw110)
