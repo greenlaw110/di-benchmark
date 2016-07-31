@@ -1,31 +1,28 @@
-package org.osgl.inject.benchmark;
+package com.greenlaw110.di_benchmark;
 
-import com.google.inject.Guice;
 import com.google.inject.Injector;
 import dagger.ObjectGraph;
 import org.codejargon.feather.Feather;
-import org.junit.Test;
 import org.osgl.inject.Genie;
 import org.picocontainer.MutablePicoContainer;
 import org.springframework.context.ApplicationContext;
+
+import static com.greenlaw110.di_benchmark.DIFactory.*;
 
 /**
  * Measures bootstrap cost of different DI tools.
  * An iteration includes creating an injector and instantiating the dependency graph.
  */
-public class RuntimeBenchmark {
-    private static final int warmup = 10000;
-    private static final int iterations = 1000 * 1000;
+public class RuntimeBenchmark implements Benchmark {
 
-    @Test
-    public void run() {
-        benchmarkExplanation();
-        Injector guice = Guice.createInjector();
+    public void run(final int warmup, final int iterations) {
+        benchmarkExplanation(iterations);
+        Injector guice = guice();
         Feather feather = Feather.with();
-        ObjectGraph dagger = StartupBenchmark.dagger();
-        MutablePicoContainer pico = StartupBenchmark.pico();
-        Genie genie = Genie.create();
-        ApplicationContext spring = StartupBenchmark.spring();
+        ObjectGraph dagger = dagger();
+        MutablePicoContainer pico = pico();
+        Genie genie = genie();
+        ApplicationContext spring = spring();
         for (int i = 0; i < warmup; ++i) {
             feather.instance(A.class);
             genie.get(A.class);
@@ -54,25 +51,26 @@ public class RuntimeBenchmark {
                 genie.get(A.class);
             }
         });
-        StopWatch.millis("PicoContainer", () -> {
+        StopWatch.millis("Pico", () -> {
             for (int i = 0; i < iterations; ++i) {
                 pico.getComponent(A.class);
             }
         });
-        //if (iterations < 100 * 100) {
+        if (iterations < 500 * 1000) {
             StopWatch.millis("Spring", () -> {
                 for (int i = 0; i < iterations; ++i) {
                     spring.getBean(A.class);
                 }
             });
-        //}
+        }
     }
 
-    private void benchmarkExplanation() {
+    private void benchmarkExplanation(int iterations) {
         System.out.println(
                 String.format(
-                        "Runtime benchmark, fetch bean for %s times:",
-                        iterations)
+                        "Runtime benchmark, fetch bean for %s times:\n%s",
+                        iterations,
+                        "--------------------------------------------------")
         );
     }
 

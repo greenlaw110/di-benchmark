@@ -25,28 +25,58 @@ All injection is done through Constructor injection
 
 ## Startup benchmark
 
-Benchmark Starting up DI containers & instantiating a dependency graph performance for 2000 times, with 200 warm up times
+Benchmark Starting up DI containers & instantiating a dependency graph performance for 5K times, with 200 warm up times
 
 ```text
-Starting up DI containers & instantiating a dependency graph 2000 times:
-Guice 733 milliseconds.
-Feather 52 milliseconds.
-Dagger 115 milliseconds.
-PicoContainer 263 milliseconds.
-Genie 308 milliseconds.
-Spring 18676 milliseconds.
+Starting up DI containers & instantiating a dependency graph 4999 times:
+---------------------------------------------------------------------------------------
+Guice	 1392 ms
+Feather	 128 ms
+Dagger	 213 ms
+Pico	 622 ms
+Genie	 681 ms
+Spring	 35872 ms
 ```
 
 ## Runtime benchmark
 
-Benchmark runtime performance: fetching bean for 1M times, with 10K times warm up:
+Benchmark runtime performance: fetching bean for 500K times, with 1K times warm up:
 
 ```text
-Runtime benchmark, fetch bean for 1000000 times:
-Guice 971 milliseconds.
-Feather 436 milliseconds.
-Dagger 251 milliseconds.
-Genie 258 milliseconds.
-PicoContainer 3665 milliseconds.
-Spring 51009 milliseconds.
+Runtime benchmark, fetch bean for 499999 times:
+--------------------------------------------------
+Guice	 559 ms
+Feather	 241 ms
+Dagger	 152 ms
+Genie	 162 ms
+Pico	 1946 ms
+Spring	 25809 ms
 ```
+
+## How to run the benchmark
+
+You need [maven](http://maven.apache.org/) to run the benchmark program.
+
+The project defined two profiles: `runtime` and `startup`.
+
+Run the `runtime` profile:
+
+`mvn clean compile exec:exec -Pruntime`
+
+This will run the Runtime benchmark, which fetch the bean of class `A` (as shown above) for `50K` times
+
+To run the `startup` profile:
+
+`mvn clean compile exec:exec -Pstartup`
+
+This will run the startup benchmark, which initialize the injector and load bean of class `A` for `5K` times.
+
+To tune the warm up and iterations:
+
+For startup benchmark:
+
+`mvn clean compile exec:exec -Pstartup -Dstartup.iteration=100 -Dstartup.warmup=10`
+
+For runtime benchmark:
+
+`mvn clean compile exec:exec -Pruntime -Druntime.iteration=1000 -Druntime.warmup=100`

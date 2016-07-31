@@ -8,7 +8,14 @@
   <name>di-benchmark</name>
   <url>http://maven.apache.org</url>
   <properties>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
     <java.version>1.8</java.version>
+    <type>runtime</type>
+    <runtime.warmup>1000</runtime.warmup>
+    <runtime.iteration>499999</runtime.iteration>
+    <startup.warmup>200</startup.warmup>
+    <startup.iteration>4999</startup.iteration>
   </properties>
   <dependencies>
     <dependency>
@@ -18,47 +25,45 @@
       <scope>test</scope>
     </dependency>
     <dependency>
+      <groupId>org.osgl</groupId>
+      <artifactId>osgl-tool</artifactId>
+      <version>0.9.0-SNAPSHOT</version>
+    </dependency>
+    <dependency>
       <groupId>org.codejargon.feather</groupId>
       <artifactId>feather</artifactId>
       <version>1.0</version>
-      <scope>test</scope>
     </dependency>
     <dependency>
       <groupId>com.google.inject</groupId>
       <artifactId>guice</artifactId>
       <version>4.1.0</version>
-      <scope>test</scope>
     </dependency>
     <dependency>
       <groupId>org.picocontainer</groupId>
       <artifactId>picocontainer</artifactId>
       <version>2.15</version>
-      <scope>test</scope>
     </dependency>
     <dependency>
       <groupId>com.squareup.dagger</groupId>
       <artifactId>dagger</artifactId>
       <version>1.2.5</version>
-      <scope>test</scope>
     </dependency>
     <dependency>
       <groupId>com.squareup.dagger</groupId>
       <artifactId>dagger-compiler</artifactId>
       <version>1.2.5</version>
-      <scope>test</scope>
       <optional>true</optional>
     </dependency>
     <dependency>
       <groupId>org.springframework</groupId>
       <artifactId>spring-context</artifactId>
       <version>4.3.2.RELEASE</version>
-      <scope>test</scope>
     </dependency>
     <dependency>
       <groupId>org.osgl</groupId>
       <artifactId>genie</artifactId>
       <version>0.2.0-SNAPSHOT</version>
-      <scope>test</scope>
     </dependency>
     <dependency>
       <groupId>log4j</groupId>
@@ -80,4 +85,70 @@
       </plugin>
     </plugins>
   </build>
+  <profiles>
+    <profile>
+      <id>runtime</id>
+      <build>
+        <plugins>
+          <plugin>
+            <groupId>org.codehaus.mojo</groupId>
+            <artifactId>exec-maven-plugin</artifactId>
+            <version>1.5.0</version>
+            <executions>
+              <execution>
+                <goals>
+                  <goal>exec</goal>
+                </goals>
+              </execution>
+            </executions>
+            <configuration>
+              <executable>java</executable>
+              <arguments>
+                <argument>-Xms512m</argument>
+                <argument>-Xmx512m</argument>
+                <argument>-classpath</argument>
+                <classpath/>
+                <argument>-Dwarmup=${runtime.warmup}</argument>
+                <argument>-Diteration=${runtime.iteration}</argument>
+                <argument>-Dtype=runtime</argument>
+                <argument>com.greenlaw110.di_benchmark.Main</argument>
+              </arguments>
+            </configuration>
+          </plugin>
+        </plugins>
+      </build>
+    </profile>
+    <profile>
+      <id>startup</id>
+      <build>
+        <plugins>
+          <plugin>
+            <groupId>org.codehaus.mojo</groupId>
+            <artifactId>exec-maven-plugin</artifactId>
+            <version>1.5.0</version>
+            <executions>
+              <execution>
+                <goals>
+                  <goal>exec</goal>
+                </goals>
+              </execution>
+            </executions>
+            <configuration>
+              <executable>java</executable>
+              <arguments>
+                <argument>-Xms512m</argument>
+                <argument>-Xmx512m</argument>
+                <argument>-classpath</argument>
+                <classpath/>
+                <argument>-Dwarmup=${startup.warmup}</argument>
+                <argument>-Diteration=${startup.iteration}</argument>
+                <argument>-Dtype=startup</argument>
+                <argument>com.greenlaw110.di_benchmark.Main</argument>
+              </arguments>
+            </configuration>
+          </plugin>
+        </plugins>
+      </build>
+    </profile>
+  </profiles>
 </project>
