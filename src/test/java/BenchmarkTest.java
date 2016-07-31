@@ -1,5 +1,5 @@
 import com.google.inject.Injector;
-import com.greenlaw110.di_benchmark.A;
+import com.greenlaw110.di_benchmark.objects.A;
 import dagger.ObjectGraph;
 import org.codejargon.feather.Feather;
 import org.junit.Assert;

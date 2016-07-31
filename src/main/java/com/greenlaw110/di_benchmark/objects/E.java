@@ -1,4 +1,4 @@
-package com.greenlaw110.di_benchmark;
+package com.greenlaw110.di_benchmark.objects;
 
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;

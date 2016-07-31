@@ -2,6 +2,7 @@ package com.greenlaw110.di_benchmark;
 
 import com.google.inject.Guice;
 import com.google.inject.Injector;
+import com.greenlaw110.di_benchmark.objects.*;
 import dagger.Module;
 import dagger.ObjectGraph;
 import org.codejargon.feather.Feather;
@@ -54,7 +55,7 @@ public class DIFactory {
 
     public static ApplicationContext spring(boolean scan) {
         if (scan) {
-            return new AnnotationConfigApplicationContext("com.greenlaw110.di_benchmark");
+            return new AnnotationConfigApplicationContext("com.greenlaw110.di_benchmark.objects");
         } else {
             return new AnnotationConfigApplicationContext(SpringConfig.class);
         }

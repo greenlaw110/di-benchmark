@@ -1,4 +1,4 @@
-package com.greenlaw110.di_benchmark;
+package com.greenlaw110.di_benchmark.objects;
 
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
@@ -8,30 +8,31 @@ import java.util.Objects;
 
 @Component
 @Scope("prototype")
-public class D2 {
-    private final E e;
+public class C {
+    private final D1 d1;
+    private final D2 d2;
 
     @Inject
-    public D2(E e) {
-        this.e = e;
+    public C(D1 d1, D2 d2) {
+        this.d1 = d1;
+        this.d2 = d2;
     }
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        D2 d2 = (D2) o;
-        return Objects.equals(e, d2.e);
+        C c = (C) o;
+        return Objects.equals(d1, c.d1) &&
+                Objects.equals(d2, c.d2);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(e);
+        return Objects.hash(d1, d2);
     }
 
     @Override
     public String toString() {
         return getClass().getSimpleName();
-    }
-
-}
+    }}
