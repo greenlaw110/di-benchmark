@@ -26,6 +26,16 @@ public class SplitStartupBenchmark {
             springScan = Boolean.parseBoolean(s);
         }
         System.out.printf("Spring scan: %s\n", springScan ? "enabled" : "disabled");
+        StopWatch.startAndFetch("Vanilla", (start, fetch) -> {
+            for (int i = 0; i < iterations; ++i) {
+                long ms = System.currentTimeMillis();
+                VanillaContainer injector = new VanillaContainer();
+                long ms2 = System.currentTimeMillis();
+                start.addAndGet(ms2 - ms);
+                injector.getInstance(A.class);
+                fetch.addAndGet(System.currentTimeMillis() - ms2);
+            }
+        });
         StopWatch.startAndFetch("Guice", (start, fetch) -> {
             for (int i = 0; i < iterations; ++i) {
                 long ms = System.currentTimeMillis();

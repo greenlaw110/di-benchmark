@@ -27,6 +27,7 @@ public class StartupBenchmark {
         }
         System.out.printf("Spring scan: %s\n", springScan ? "enabled" : "disabled");
         for (int i = 0; i < warmup; ++i) {
+            vanilla().getInstance(A.class);
             Feather.with().instance(A.class);
             genie().get(A.class);
             Guice.createInjector().getInstance(A.class);
@@ -34,6 +35,12 @@ public class StartupBenchmark {
             dagger().get(A.class);
             spring(springScan).getBean(A.class);
         }
+        StopWatch.millis("Vanilla", () -> {
+            for (int i = 0; i < iterations; ++i) {
+                VanillaContainer vanilla = new VanillaContainer();
+                vanilla.getInstance(A.class);
+            }
+        });
         StopWatch.millis("Guice", () -> {
             for (int i = 0; i < iterations; ++i) {
                 Injector injector = Guice.createInjector();
