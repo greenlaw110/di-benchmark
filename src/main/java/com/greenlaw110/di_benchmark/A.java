@@ -1,10 +1,10 @@
 package com.greenlaw110.di_benchmark;
 
-import org.osgl.$;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
 import javax.inject.Inject;
+import java.util.Objects;
 
 @Component
 @Scope("prototype")
@@ -17,16 +17,16 @@ public class A {
     }
 
     @Override
-    public int hashCode() {
-        return $.hc("a", b);
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        A a = (A) o;
+        return Objects.equals(b, a.b);
     }
 
     @Override
-    public boolean equals(Object obj) {
-        if (obj == this) {
-            return true;
-        }
-        return (obj instanceof A && $.eq(((A) obj).b, b));
+    public int hashCode() {
+        return Objects.hash(b);
     }
 
     @Override
