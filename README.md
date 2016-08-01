@@ -93,7 +93,7 @@ For runtime benchmark:
 
 ### <a id="a1">Split container startup and first bean load benchmark</a>
 
-As per [zapov's comment](https://www.reddit.com/r/java/comments/4vfw57/a_simple_program_benchmark_dependency_injection/), another profile has been added into the project: `split_startup`, which reports the startup and fetch the first component performance respectively, and the new benchmark shows:
+As per [zapov's comment](https://www.reddit.com/r/java/comments/4vfw57/a_simple_program_benchmark_dependency_injection/d5y6hbz), another profile has been added into the project: `split_startup`, which reports the startup and fetch the first component performance respectively, and the new benchmark shows:
 
 ```
 Split Starting up DI containers & instantiating a dependency graph 4999 times:
@@ -113,7 +113,7 @@ Here is the command the run split startup benchmark:
 
 ### <a id="a2">Add new benchmark for Spring startup without package scanning</a>
 
-As per [meotau's comment](https://www.reddit.com/r/java/comments/4vfw57/a_simple_program_benchmark_dependency_injection/), I have added a property `springscan` to show Spring's performance without package scanning. The startup and startup split result without package scanning are:
+As per [meotau's comment](https://www.reddit.com/r/java/comments/4vfw57/a_simple_program_benchmark_dependency_injection/d5yasgl), I have added a property `springscan` to allow toggle off package scanning for Spring. The startup and startup split result without package scanning are:
 
 ```
 Starting up DI containers & instantiating a dependency graph 4999 times:
