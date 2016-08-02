@@ -67,27 +67,31 @@ You need [maven](http://maven.apache.org/) to run the benchmark program.
 
 The project defined two profiles: `runtime` and `startup`.
 
-Run the `runtime` profile:
-
-`mvn clean compile exec:exec -Pruntime`
+```bash
+#Run the `runtime` profile:
+mvn clean compile exec:exec -Pruntime
+```
 
 This will run the Runtime benchmark, which fetch the bean of class `A` (as shown above) for `50K` times
 
-To run the `startup` profile:
-
-`mvn clean compile exec:exec -Pstartup`
+```bash
+#To run the `startup` profile:
+mvn clean compile exec:exec -Pstartup
+```
 
 This will run the startup benchmark, which initialize the injector and load bean of class `A` for `5K` times.
 
 To tune the warm up and iterations:
 
-For startup benchmark:
+```
+#For startup benchmark:
+mvn clean compile exec:exec -Pstartup -Dstartup.iteration=100 -Dstartup.warmup=10
+```
 
-`mvn clean compile exec:exec -Pstartup -Dstartup.iteration=100 -Dstartup.warmup=10`
-
-For runtime benchmark:
-
-`mvn clean compile exec:exec -Pruntime -Druntime.iteration=1000 -Druntime.warmup=100`
+```
+#For runtime benchmark:
+mvn clean compile exec:exec -Pruntime -Druntime.iteration=1000 -Druntime.warmup=100
+```
 
 ## Amendment 
 
