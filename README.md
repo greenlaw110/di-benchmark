@@ -1,4 +1,4 @@
-# Depenedency Injector Benchmark Set
+# Dependency Injector Benchmark Set
 
 This project benchmark the following DI solutions:
 

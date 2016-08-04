@@ -142,6 +142,7 @@
             <configuration>
               <executable>java</executable>
               <arguments>
+                <argument>-server</argument>
                 <argument>-Xms512m</argument>
                 <argument>-Xmx512m</argument>
                 <argument>-classpath</argument>
