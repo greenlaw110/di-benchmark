@@ -67,33 +67,37 @@ You need [maven](http://maven.apache.org/) to run the benchmark program.
 
 The project defined two profiles: `runtime` and `startup`.
 
-Run the `runtime` profile:
-
-`mvn clean compile exec:exec -Pruntime`
+```bash
+#Run the `runtime` profile:
+mvn clean compile exec:exec -Pruntime
+```
 
 This will run the Runtime benchmark, which fetch the bean of class `A` (as shown above) for `50K` times
 
-To run the `startup` profile:
-
-`mvn clean compile exec:exec -Pstartup`
+```bash
+#To run the `startup` profile:
+mvn clean compile exec:exec -Pstartup
+```
 
 This will run the startup benchmark, which initialize the injector and load bean of class `A` for `5K` times.
 
 To tune the warm up and iterations:
 
-For startup benchmark:
+```
+#For startup benchmark:
+mvn clean compile exec:exec -Pstartup -Dstartup.iteration=100 -Dstartup.warmup=10
+```
 
-`mvn clean compile exec:exec -Pstartup -Dstartup.iteration=100 -Dstartup.warmup=10`
-
-For runtime benchmark:
-
-`mvn clean compile exec:exec -Pruntime -Druntime.iteration=1000 -Druntime.warmup=100`
+```
+#For runtime benchmark:
+mvn clean compile exec:exec -Pruntime -Druntime.iteration=1000 -Druntime.warmup=100
+```
 
 ## Amendment 
 
 ### <a id="a1">Split container startup and first bean load benchmark</a>
 
-As per [zapov's comment](https://www.reddit.com/r/java/comments/4vfw57/a_simple_program_benchmark_dependency_injection/), another profile has been added into the project: `split_startup`, which reports the startup and fetch the first component performance respectively, and the new benchmark shows:
+As per [zapov's comment](https://www.reddit.com/r/java/comments/4vfw57/a_simple_program_benchmark_dependency_injection/d5y6hbz), another profile has been added into the project: `split_startup`, which reports the startup and fetch the first component performance respectively, and the new benchmark shows:
 
 ```
 Split Starting up DI containers & instantiating a dependency graph 4999 times:
@@ -113,7 +117,7 @@ Here is the command the run split startup benchmark:
 
 ### <a id="a2">Add new benchmark for Spring startup without package scanning</a>
 
-As per [meotau's comment](https://www.reddit.com/r/java/comments/4vfw57/a_simple_program_benchmark_dependency_injection/), I have added a property `springscan` to show Spring's performance without package scanning. The startup and startup split result without package scanning are:
+As per [meotau's comment](https://www.reddit.com/r/java/comments/4vfw57/a_simple_program_benchmark_dependency_injection/d5yasgl), I have added a property `springscan` to allow toggle off package scanning for Spring. The startup and startup split result without package scanning are:
 
 ```
 Starting up DI containers & instantiating a dependency graph 4999 times:
