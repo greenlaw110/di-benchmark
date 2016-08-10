@@ -17,4 +17,9 @@
         <appender-ref ref="consoleAppender"/>
     </logger>
 
+    <logger name="org.osgl.inject.Genie">
+        <level value="error" />
+        <appender-ref ref="consoleAppender"/>
+    </logger>
+
 </log4j:configuration>
