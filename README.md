@@ -30,8 +30,6 @@ All injection is done through Constructor injection
 
 ### Startup and first time fetch benchmark
 
-Benchmark Starting up DI containers & instantiating a dependency graph performance for 5K times, with 200 warm up times
-
 ```text
 Split Starting up DI containers & instantiating a dependency graph 4999 times:
 ---------------------------------------------------------------------------------------
