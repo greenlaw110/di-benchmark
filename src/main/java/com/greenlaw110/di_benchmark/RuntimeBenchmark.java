@@ -1,6 +1,7 @@
 package com.greenlaw110.di_benchmark;
 
 import com.google.inject.Injector;
+import com.greenlaw110.di_benchmark.objects.A;
 import dagger.ObjectGraph;
 import org.codejargon.feather.Feather;
 import org.osgl.inject.Genie;
@@ -17,6 +18,7 @@ public class RuntimeBenchmark {
 
     public void run(final int warmup, final int iterations) {
         benchmarkExplanation(iterations);
+        VanillaContainer vanilla = vanilla();
         Injector guice = guice();
         Feather feather = Feather.with();
         ObjectGraph dagger = dagger();
@@ -31,6 +33,11 @@ public class RuntimeBenchmark {
             dagger.get(A.class);
             spring.getBean(A.class);
         }
+        StopWatch.millis("Vanilla", () -> {
+            for (int i = 0; i < iterations; ++i) {
+                vanilla.getInstance(A.class);
+            }
+        });
         StopWatch.millis("Guice", () -> {
             for (int i = 0; i < iterations; ++i) {
                 guice.getInstance(A.class);

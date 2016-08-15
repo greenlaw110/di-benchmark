@@ -2,6 +2,7 @@ package com.greenlaw110.di_benchmark;
 
 import com.google.inject.Guice;
 import com.google.inject.Injector;
+import com.greenlaw110.di_benchmark.objects.*;
 import dagger.Module;
 import dagger.ObjectGraph;
 import org.codejargon.feather.Feather;
@@ -14,7 +15,33 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Scope;
 
+import java.util.HashMap;
+import java.util.Map;
+import java.util.function.Function;
+
 public class DIFactory {
+
+    public static class VanillaContainer {
+        public <T> T getInstance(Class<T> instanceClass) {
+            if (A.class.equals(instanceClass)) {
+                return (T) getA();
+            }
+            return null;
+        }
+
+        private A getA() {
+            E e = new E();
+            D1 d1 = new D1(e);
+            D2 d2 = new D2(e);
+            C c = new C(d1, d2);
+            B b = new B(c);
+            return new A(b);
+        }
+    }
+
+    public static VanillaContainer vanilla() {
+        return new VanillaContainer();
+    }
 
     public static Injector guice() {
         return Guice.createInjector();
@@ -54,7 +81,7 @@ public class DIFactory {
 
     public static ApplicationContext spring(boolean scan) {
         if (scan) {
-            return new AnnotationConfigApplicationContext("com.greenlaw110.di_benchmark");
+            return new AnnotationConfigApplicationContext("com.greenlaw110.di_benchmark.objects");
         } else {
             return new AnnotationConfigApplicationContext(SpringConfig.class);
         }

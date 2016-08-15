@@ -1,24 +1,17 @@
-package com.greenlaw110.di_benchmark;
+package com.greenlaw110.di_benchmark.objects;
 
-import org.osgl.$;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
-import javax.inject.Inject;
+import java.util.Objects;
 
 @Component
 @Scope("prototype")
-public class D2 {
-    private final E e;
-
-    @Inject
-    public D2(E e) {
-        this.e = e;
-    }
+public class E {
 
     @Override
     public int hashCode() {
-        return $.hc("d2", e);
+        return Objects.hashCode("e");
     }
 
     @Override
@@ -26,7 +19,7 @@ public class D2 {
         if (obj == this) {
             return true;
         }
-        return (obj instanceof D2 && $.eq(((D2) obj).e, e));
+        return (obj instanceof E);
     }
 
     @Override
