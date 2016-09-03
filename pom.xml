@@ -77,7 +77,32 @@
       <version>1.2.17</version>
       <scope>runtime</scope>
     </dependency>
+
+<!--Below are for jBeanBox -->
+      <dependency>
+        <groupId>aopalliance</groupId>
+        <artifactId>aopalliance</artifactId>
+        <version>1.0</version>
+      </dependency>
+      <dependency>
+          <groupId>org.aspectj</groupId>
+          <artifactId>aspectjrt</artifactId>
+          <version>1.7.4</version>
+      </dependency>
+      <dependency>
+        <groupId>org.ow2.asm</groupId>
+        <artifactId>asm</artifactId>
+        <version>5.0.3</version>
+      </dependency>
+      <dependency>
+        <groupId>cglib</groupId>
+        <artifactId>cglib</artifactId>
+        <version>3.2.0</version>
+      </dependency>
+<!-- -->
+
   </dependencies>
+
   <build>
     <plugins>
       <plugin>
