@@ -9,22 +9,22 @@ import java.util.Objects;
 @Scope("prototype")
 public class E {
 
-    @Override
-    public int hashCode() {
-        return Objects.hashCode("e");
-    }
+	@Override
+	public int hashCode() {
+		return Objects.hashCode("e");
+	}
 
-    @Override
-    public boolean equals(Object obj) {
-        if (obj == this) {
-            return true;
-        }
-        return (obj instanceof E);
-    }
+	@Override
+	public boolean equals(Object obj) {
+		if (obj == this) {
+			return true;
+		}
+		return (obj instanceof E);
+	}
 
-    @Override
-    public String toString() {
-        return getClass().getSimpleName();
-    }
+	@Override
+	public String toString() {
+		return getClass().getSimpleName();
+	}
 
 }

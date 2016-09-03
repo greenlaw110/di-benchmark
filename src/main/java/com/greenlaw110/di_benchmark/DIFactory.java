@@ -1,10 +1,5 @@
 package com.greenlaw110.di_benchmark;
 
-import com.google.inject.Guice;
-import com.google.inject.Injector;
-import com.greenlaw110.di_benchmark.objects.*;
-import dagger.Module;
-import dagger.ObjectGraph;
 import org.codejargon.feather.Feather;
 import org.osgl.inject.Genie;
 import org.picocontainer.DefaultPicoContainer;
@@ -15,14 +10,26 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Scope;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.function.Function;
+import com.google.inject.Guice;
+import com.google.inject.Injector;
+import com.greenlaw110.di_benchmark.configs.JBeanBoxConfig1;
+import com.greenlaw110.di_benchmark.configs.JBeanBoxConfig2;
+import com.greenlaw110.di_benchmark.objects.A;
+import com.greenlaw110.di_benchmark.objects.B;
+import com.greenlaw110.di_benchmark.objects.C;
+import com.greenlaw110.di_benchmark.objects.D1;
+import com.greenlaw110.di_benchmark.objects.D2;
+import com.greenlaw110.di_benchmark.objects.E;
+
+import dagger.Module;
+import dagger.ObjectGraph;
+import net.sf.jbeanbox.BeanBoxContext;
 
 public class DIFactory {
 
     public static class VanillaContainer {
-        public <T> T getInstance(Class<T> instanceClass) {
+        @SuppressWarnings("unchecked")
+		public <T> T getInstance(Class<T> instanceClass) {
             if (A.class.equals(instanceClass)) {
                 return (T) getA();
             }
@@ -78,6 +85,17 @@ public class DIFactory {
         }
     }
 
+    public static BeanBoxContext jbeanboxNormal() {
+        return new BeanBoxContext(JBeanBoxConfig1.class);
+    }
+    
+    public static BeanBoxContext jbeanboxTypeSafe() {
+        return new BeanBoxContext(JBeanBoxConfig2.class);
+    }
+    
+    public static BeanBoxContext jbeanboxAnnotation() {
+        return new BeanBoxContext();
+    }
 
     public static ApplicationContext spring(boolean scan) {
         if (scan) {

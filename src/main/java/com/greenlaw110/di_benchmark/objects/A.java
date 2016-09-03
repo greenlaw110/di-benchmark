@@ -1,16 +1,20 @@
 package com.greenlaw110.di_benchmark.objects;
 
+import java.util.Objects;
+
+import javax.inject.Inject;
+
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
-import javax.inject.Inject;
-import java.util.Objects;
+import net.sf.jbeanbox.InjectBox;
 
 @Component
 @Scope("prototype")
 public class A {
     private final B b;
 
+	@InjectBox
     @Inject
     public A(B b) {
         this.b = b;
