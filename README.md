@@ -66,7 +66,7 @@ Runtime benchmark, fetch new bean for 50K times:
 ```
 
 ```
-untime benchmark, fetch singleton bean for 5000000 times:
+Runtime benchmark, fetch singleton bean for 5000000 times:
 ---------------------------------------------------------
                      Vanilla|     5ms
                        Guice|   559ms
@@ -79,20 +79,6 @@ untime benchmark, fetch singleton bean for 5000000 times:
           jBeanBoxAnnotation|   105ms
      SpringJavaConfiguration|   245ms
      SpringAnnotationScanned|   228ms
-```
-Runtime benchmark, fetch singleton bean for 5M times:
----------------------------------------------------------
-                     Vanilla|     5ms
-                       Guice|   510ms
-                     Feather|   175ms
-                      Dagger|   693ms
-                       Genie|   109ms
-                        Pico|   235ms
-              jBeanBoxNormal|  Failed
-            jBeanBoxTypeSafe|  Failed
-          jBeanBoxAnnotation|  Failed
-     SpringJavaConfiguration|   240ms
-     SpringAnnotationScanned|   219ms
 ```
 
 ## How to run the benchmark
