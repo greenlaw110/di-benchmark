@@ -18,10 +18,9 @@
     <java.version>1.8</java.version>
     <type>runtime</type>
     <runtime.warmup>1000</runtime.warmup>
-    <runtime.iteration>499999</runtime.iteration>
+    <runtime.iteration>49999</runtime.iteration>
     <startup.warmup>200</startup.warmup>
     <startup.iteration>4999</startup.iteration>
-    <springscan>false</springscan>
   </properties>
   <dependencies>
     <dependency>
@@ -77,7 +76,13 @@
       <version>1.2.17</version>
       <scope>runtime</scope>
     </dependency>
+    <dependency>
+      <groupId>com.github.drinkjava2</groupId>
+      <artifactId>jbeanbox</artifactId>
+      <version>2.4.1</version>
+    </dependency>
   </dependencies>
+
   <build>
     <plugins>
       <plugin>
@@ -150,7 +155,6 @@
                 <argument>-Dwarmup=${startup.warmup}</argument>
                 <argument>-Diteration=${startup.iteration}</argument>
                 <argument>-Dtype=startup</argument>
-                <argument>-Dspring_scan=${springscan}</argument>
                 <argument>com.greenlaw110.di_benchmark.Main</argument>
               </arguments>
             </configuration>
@@ -183,7 +187,6 @@
                 <argument>-Dwarmup=${startup.warmup}</argument>
                 <argument>-Diteration=${startup.iteration}</argument>
                 <argument>-Dtype=split_startup</argument>
-                <argument>-Dspring_scan=${springscan}</argument>
                 <argument>com.greenlaw110.di_benchmark.Main</argument>
               </arguments>
             </configuration>
