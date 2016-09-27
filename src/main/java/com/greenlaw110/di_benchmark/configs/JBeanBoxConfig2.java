@@ -3,6 +3,7 @@ package com.greenlaw110.di_benchmark.configs;
 import com.github.drinkjava2.BeanBox;
 import com.github.drinkjava2.BeanBoxContext;
 import com.greenlaw110.di_benchmark.objects.A;
+import com.greenlaw110.di_benchmark.objects.A0;
 import com.greenlaw110.di_benchmark.objects.B;
 import com.greenlaw110.di_benchmark.objects.C;
 import com.greenlaw110.di_benchmark.objects.D1;
@@ -18,6 +19,12 @@ public class JBeanBoxConfig2 {
 	public static class ABox extends ProtoTypeBox { 
 		public A create() {
 			return new A(context.getBean(B.class));
+		}
+	}
+	
+	public static class A0Box extends BeanBox { 
+		public A0 create() {
+			return new A0(context.getBean(B.class));
 		}
 	}
 
