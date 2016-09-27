@@ -8,14 +8,14 @@ import javax.inject.Inject;
 import javax.inject.Singleton;
 import java.util.Objects;
 
-@InjectBox
-@Component
-@Singleton
+@InjectBox  // for jBeanbox usage
+@Component // for Spring usage
+@Singleton // for JSR330 compliant DI library usage
 public class A0 {
 	private final B b;
 
-	@InjectBox
-	@Inject
+	@InjectBox // for jBeanBox
+	@Inject // for JSR330 compliant DI libraries
 	public A0(B b) {
 		this.b = b;
 	}

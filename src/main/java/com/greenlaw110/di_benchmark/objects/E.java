@@ -7,9 +7,9 @@ import org.springframework.stereotype.Component;
 
 import com.github.drinkjava2.InjectBox;
 
-@InjectBox(prototype = true)
-@Component
-@Scope("prototype")
+@InjectBox(prototype = true) // for jBeanBox usage
+@Component // for Spring usage
+@Scope("prototype") // for Spring usage
 public class E {
 
 	@Override

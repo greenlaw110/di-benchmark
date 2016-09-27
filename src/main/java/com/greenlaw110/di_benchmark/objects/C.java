@@ -8,15 +8,15 @@ import com.github.drinkjava2.InjectBox;
 import javax.inject.Inject;
 import java.util.Objects;
 
-@InjectBox(prototype = true)
-@Component
-@Scope("prototype")
+@InjectBox(prototype = true) // for jBeanBox usage
+@Component // for Spring usage
+@Scope("prototype") // for Spring usage
 public class C {
 	private final D1 d1;
 	private final D2 d2;
 
-	@InjectBox
-	@Inject
+	@InjectBox // for jBeanBox
+	@Inject // for JSR330 compliant DI libraries
 	public C(D1 d1, D2 d2) {
 		this.d1 = d1;
 		this.d2 = d2;

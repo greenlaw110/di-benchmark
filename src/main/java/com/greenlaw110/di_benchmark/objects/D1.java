@@ -9,13 +9,13 @@ import com.github.drinkjava2.InjectBox;
 import javax.inject.Inject;
 import java.util.Objects;
 
-@InjectBox(prototype = true)
-@Component
-@Scope("prototype")
+@InjectBox(prototype = true) // for jBeanBox usage
+@Component // for Spring usage
+@Scope("prototype") // for Spring usage
 public class D1 {
 
-	@InjectBox
-	@Inject
+	@InjectBox // for jBeanBox
+	@Inject // for JSR330 compliant DI libraries
 	public D1(E e) {
 	}
 
