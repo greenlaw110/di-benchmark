@@ -8,7 +8,6 @@ import javax.inject.Inject;
 import javax.inject.Singleton;
 import java.util.Objects;
 
-@InjectBox  // for jBeanbox usage
 @Component // for Spring usage
 @Singleton // for JSR330 compliant DI library usage
 public class A0 {

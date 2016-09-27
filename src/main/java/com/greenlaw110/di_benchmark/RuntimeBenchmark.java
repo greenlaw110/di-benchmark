@@ -98,8 +98,8 @@ public class RuntimeBenchmark {
 			}
 		});
 
-		if (!singleton) {
-			if (iterations < 500000) {
+		//if (!singleton) {
+			if (singleton || iterations < 500000) {
 				StopWatch.millis("jBeanBoxNormal", () -> {
 					for (int i = 0; i < iterations; ++i) {
 						jbeanboxNormal.getBean(CLS);
@@ -111,14 +111,14 @@ public class RuntimeBenchmark {
 					jbeanboxTypeSafe.getBean(CLS);
 				}
 			});
-			if (iterations < 500000) {
+			if (singleton || iterations < 500000) {
 				StopWatch.millis("jBeanBoxAnnotation", () -> {
 					for (int i = 0; i < iterations; ++i) {
 						jbeanboxAnnotation.getBean(CLS);
 					}
 				});
 			}
-		}
+		//}
 
 		if (singleton || iterations < 500000) {
 			StopWatch.millis("SpringJavaConfiguration", () -> {
