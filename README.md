@@ -66,6 +66,22 @@ Runtime benchmark, fetch new bean for 50K times:
 ```
 
 ```
+Runtime benchmark, fetch new bean for 5M times:
+---------------------------------------------------------
+                     Vanilla|   242ms
+                       Guice|  3022ms
+                     Feather|  1748ms
+                      Dagger|   842ms
+                       Genie|  1043ms
+                        Pico| 13185ms
+              jBeanBoxNormal| Timeout
+            jBeanBoxTypeSafe| 74607ms
+          jBeanBoxAnnotation| Timeout
+     SpringJavaConfiguration| Timeout
+     SpringAnnotationScanned| Timeout
+```
+
+```
 Runtime benchmark, fetch singleton bean for 5M times:
 ---------------------------------------------------------
                      Vanilla|     5ms
