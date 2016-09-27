@@ -10,6 +10,8 @@ public class Main {
     public static void main(String[] args) {
         int warmUp = WARM_UP;
         int iteration = ITERATION;
+        String singletonStr = conf("singleton");
+        boolean singleton = S.notBlank(singletonStr) && Boolean.parseBoolean(singletonStr);
         String s = conf("warmup");
         if (S.notBlank(s)) {
             warmUp = Integer.parseInt(s);
@@ -20,7 +22,7 @@ public class Main {
         }
         s = conf("type");
         if (S.eq(s, "runtime")) {
-            new RuntimeBenchmark().run(warmUp, iteration);
+            new RuntimeBenchmark().run(warmUp, iteration, singleton);
         }
         if (S.eq(s, "startup")) {
             new StartupBenchmark().run(warmUp, iteration);

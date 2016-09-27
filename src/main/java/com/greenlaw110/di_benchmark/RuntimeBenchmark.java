@@ -10,6 +10,7 @@ import static com.greenlaw110.di_benchmark.DIFactory.pico;
 import static com.greenlaw110.di_benchmark.DIFactory.spring;
 import static com.greenlaw110.di_benchmark.DIFactory.vanilla;
 
+import com.greenlaw110.di_benchmark.objects.A0;
 import org.codejargon.feather.Feather;
 import org.osgl.inject.Genie;
 import org.picocontainer.MutablePicoContainer;
@@ -28,8 +29,11 @@ import dagger.ObjectGraph;
  */
 public class RuntimeBenchmark {
 
-	public void run(final int warmup, final int iterations) {
-		benchmarkExplanation(iterations);
+	private static Class A_CLS = A.class;
+	private static Class A_SINGLETON_CLS = A0.class;
+
+	public void run(final int warmup, final int iterations, final boolean singleton) {
+		benchmarkExplanation(iterations, singleton);
 		VanillaContainer vanilla = vanilla();
 		Injector guice = guice();
 		Feather feather = Feather.with();
@@ -42,86 +46,97 @@ public class RuntimeBenchmark {
 		ApplicationContext spring = spring(false);
 		ApplicationContext springScan = spring(true);
 
+		final Class<?> CLS = singleton ? A_SINGLETON_CLS : A_CLS;
+
 		for (int i = 0; i < warmup; ++i) {
-			feather.instance(A.class);
-			genie.get(A.class);
-			guice.getInstance(A.class);
-			pico.getComponent(A.class);
-			dagger.get(A.class);
-			spring.getBean(A.class);
+			feather.instance(CLS);
+			genie.get(CLS);
+			guice.getInstance(CLS);
+			pico.getComponent(CLS);
+			dagger.get(CLS);
+			spring.getBean(CLS);
+			if (!singleton) {
+				jbeanboxNormal.getBean(CLS);
+				jbeanboxTypeSafe.getBean(CLS);
+				jbeanboxAnnotation.getBean(CLS);
+			}
 		}
 
 		StopWatch.millis("Vanilla", () -> {
 			for (int i = 0; i < iterations; ++i) {
-				vanilla.getInstance(A.class);
+				vanilla.getInstance(CLS);
 			}
 		});
 
 		StopWatch.millis("Guice", () -> {
 			for (int i = 0; i < iterations; ++i) {
-				guice.getInstance(A.class);
+				guice.getInstance(CLS);
 			}
 		});
 
 		StopWatch.millis("Feather", () -> {
 			for (int i = 0; i < iterations; ++i) {
-				feather.instance(A.class);
+				feather.instance(CLS);
 			}
 		});
 
 		StopWatch.millis("Dagger", () -> {
 			for (int i = 0; i < iterations; ++i) {
-				dagger.get(A.class);
+				dagger.get(CLS);
 			}
 		});
 
 		StopWatch.millis("Genie", () -> {
 			for (int i = 0; i < iterations; ++i) {
-				genie.get(A.class);
+				genie.get(CLS);
 			}
 		});
 
 		StopWatch.millis("Pico", () -> {
 			for (int i = 0; i < iterations; ++i) {
-				pico.getComponent(A.class);
+				pico.getComponent(CLS);
 			}
 		});
 
-		StopWatch.millis("jBeanBoxNormal", () -> {
-			for (int i = 0; i < iterations; ++i) {
-				jbeanboxNormal.getBean(A.class);
-			}
-		});
-		StopWatch.millis("jBeanBoxTypeSafe", () -> {
-			for (int i = 0; i < iterations; ++i) {
-				jbeanboxTypeSafe.getBean(A.class);
-			}
-		});
-		StopWatch.millis("jBeanBoxAnnotation", () -> {
-			for (int i = 0; i < iterations; ++i) {
-				jbeanboxAnnotation.getBean(A.class);
-			}
-		});
+		if (!singleton) {
+			StopWatch.millis("jBeanBoxNormal", () -> {
+				for (int i = 0; i < iterations; ++i) {
+					jbeanboxNormal.getBean(CLS);
+				}
+			});
+			StopWatch.millis("jBeanBoxTypeSafe", () -> {
+				for (int i = 0; i < iterations; ++i) {
+					jbeanboxTypeSafe.getBean(CLS);
+				}
+			});
+			StopWatch.millis("jBeanBoxAnnotation", () -> {
+				for (int i = 0; i < iterations; ++i) {
+					jbeanboxAnnotation.getBean(CLS);
+				}
+			});
+		}
+
 		if (iterations < 500000) {
 			StopWatch.millis("SpringJavaConfiguration", () -> {
 				for (int i = 0; i < iterations; ++i) {
-					spring.getBean(A.class);
+					spring.getBean(CLS);
 				}
 			});
 		}
 		if (iterations < 500000) {
 			StopWatch.millis("SpringAnnotationScanned", () -> {
 				for (int i = 0; i < iterations; ++i) {
-					springScan.getBean(A.class);
+					springScan.getBean(CLS);
 				}
 			});
 		}
 
 	}
 
-	private void benchmarkExplanation(int iterations) {
-		System.out.println(String.format("Runtime benchmark, fetch bean for %s times:\n%s", iterations,
-				"--------------------------------------------------"));
+	private void benchmarkExplanation(int iterations, boolean singleton) {
+		System.out.println(String.format("Runtime benchmark, fetch %s bean for %s times:\n%s",
+				singleton ? "singleton" : "new", iterations,
+				"---------------------------------------------------------"));
 	}
 
 }

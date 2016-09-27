@@ -18,6 +18,7 @@
     <java.version>1.8</java.version>
     <type>runtime</type>
     <runtime.warmup>1000</runtime.warmup>
+    <singleton>false</singleton>
     <runtime.iteration>49999</runtime.iteration>
     <startup.warmup>200</startup.warmup>
     <startup.iteration>4999</startup.iteration>
@@ -119,6 +120,7 @@
                 <argument>-Xmx512m</argument>
                 <argument>-classpath</argument>
                 <classpath/>
+                <argument>-Dsingleton=${singleton}</argument>
                 <argument>-Dwarmup=${runtime.warmup}</argument>
                 <argument>-Diteration=${runtime.iteration}</argument>
                 <argument>-Dtype=runtime</argument>

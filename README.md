@@ -30,49 +30,53 @@ All injection is done through Constructor injection
 ## Benchmarks
 
 ### Startup and first time fetch benchmark
+
 ```
-Split Starting up DI containers & instantiating a dependency graph 100 times (Prototype):
+Split Starting up DI containers & instantiating a dependency graph 4999 times:
 -------------------------------------------------------------------------------
-                                      Vanilla| start:     1ms   fetch:     6ms
-                                        Guice| start:   727ms   fetch:   747ms
-                                      Feather| start:     6ms   fetch:    39ms
-                                       Dagger| start:    74ms   fetch:    48ms
-                                         Pico| start:   115ms   fetch:   127ms
-                                        Genie| start:   658ms   fetch:    89ms
-                               jBeanBoxNormal| start:     3ms   fetch:   123ms
-                             jBeanBoxTypeSafe| start:     1ms   fetch:    40ms
-                           jBeanBoxAnnotation| start:     1ms   fetch:   106ms
-                      SpringJavaConfiguration| start:  4542ms   fetch:   621ms
-                      SpringAnnotationScanned| start:  4668ms   fetch:   757ms
+                     Vanilla| start:     3ms   fetch:     5ms
+                       Guice| start:   458ms   fetch:   800ms
+                     Feather| start:     8ms   fetch:    73ms
+                      Dagger| start:    46ms   fetch:   130ms
+                        Pico| start:   166ms   fetch:   161ms
+                       Genie| start:   478ms   fetch:    98ms
+              jBeanBoxNormal| start:     7ms   fetch:   339ms
+            jBeanBoxTypeSafe| start:     3ms   fetch:   162ms
+          jBeanBoxAnnotation| start:     4ms   fetch:   597ms
+     SpringJavaConfiguration| start: 13956ms   fetch:  1149ms
+     SpringAnnotationScanned| start: 22302ms   fetch:  2738ms
+```
+
+### Runtime bean injection benchmark
+
+```
+Runtime benchmark, fetch new bean for 49999 times:
+---------------------------------------------------------
+                     Vanilla|     3ms
+                       Guice|   188ms
+                     Feather|    68ms
+                      Dagger|    28ms
+                       Genie|    45ms
+                        Pico|   353ms
+              jBeanBoxNormal|  1698ms
+            jBeanBoxTypeSafe|   880ms
+          jBeanBoxAnnotation|  2591ms
+     SpringJavaConfiguration|  1936ms
+     SpringAnnotationScanned|  2369ms
 ```
 
 ```
-Runtime benchmark, fetch bean for 10000 times (Prototype):
---------------------------------------------------
-                                      Vanilla|    11ms
-                                        Guice|   153ms
-                                      Feather|    59ms
-                                       Dagger|    43ms
-                                        Genie|    52ms
-                                         Pico|   430ms
-                               jBeanBoxNormal|  3791ms
-                             jBeanBoxTypeSafe|   950ms
-                           jBeanBoxAnnotation|  4603ms
-                      SpringJavaConfiguration|  5003ms
-                      SpringAnnotationScanned|  6331ms
+Runtime benchmark, fetch singleton bean for 49999 times:
+---------------------------------------------------------
+                     Vanilla|     3ms
+                       Guice|    41ms
+                     Feather|    11ms
+                      Dagger|    29ms
+                       Genie|     5ms
+                        Pico|    35ms
+     SpringJavaConfiguration|    18ms
+     SpringAnnotationScanned|    15ms
 ```
-
-If change configurations to Singleton (only compared jBeanBox & Spring):
-```
-Runtime benchmark, fetch bean for 100000 times:
---------------------------------------------------
-                               jBeanBoxNormal|    47ms
-                             jBeanBoxTypeSafe|    31ms
-                           jBeanBoxAnnotation|    78ms
-                      SpringJavaConfiguration|    94ms
-                      SpringAnnotationScanned|    78ms
-```
-
 
 ## How to run the benchmark
 
@@ -104,6 +108,12 @@ mvn clean compile exec:exec -Psplit_startup -Dstartup.iteration=100 -Dstartup.wa
 ```
 #For runtime benchmark:
 mvn clean compile exec:exec -Pruntime -Druntime.iteration=1000 -Druntime.warmup=100
+```
+
+To benchmark singleton injection:
+
+```
+mvn clean compile exec:exec -Pruntime -Dsingleton=true
 ```
 
 ## Disclaim
