@@ -66,7 +66,7 @@ Runtime benchmark, fetch new bean for 50K times:
 ```
 
 ```
-Runtime benchmark, fetch singleton bean for 5000000 times:
+Runtime benchmark, fetch singleton bean for 5M times:
 ---------------------------------------------------------
                      Vanilla|     5ms
                        Guice|   559ms
