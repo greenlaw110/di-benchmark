@@ -1,4 +1,4 @@
-# Dependency Injector Benchmark Set
+﻿# Dependency Injector Benchmark Set
 
 This project benchmark the following DI solutions:
 
@@ -8,6 +8,7 @@ This project benchmark the following DI solutions:
 * [Feather](https://github.com/zsoltherpai/feather) - 1.0
 * [Dagger](https://github.com/square/dagger) - 1.2.5
 * [Pico](http://picocontainer.com/) - 2.15
+* [jBeanBox](https://github.com/drinkjava2/jBeanBox) - 2.4.1
 * [Spring](http://projects.spring.io/spring-framework/) - 4.3.2.RELEASE
 
 ## Object Graph
@@ -29,37 +30,53 @@ All injection is done through Constructor injection
 ## Benchmarks
 
 ### Startup and first time fetch benchmark
-
-```text
-Split Starting up DI containers & instantiating a dependency graph 4999 times:
----------------------------------------------------------------------------------------
-Spring scan: disabled
- Vanilla| start:     4ms   fetch:     5ms
-   Guice| start:   619ms   fetch:  1067ms
- Feather| start:     7ms   fetch:   105ms
-  Dagger| start:    80ms   fetch:   160ms
-    Pico| start:   204ms   fetch:   267ms
-   Genie| start:   385ms   fetch:   168ms
-  Spring| start: 20827ms   fetch:  1681ms
+```
+Split Starting up DI containers & instantiating a dependency graph 100 times (Prototype):
+-------------------------------------------------------------------------------
+                                      Vanilla| start:     1ms   fetch:     6ms
+                                        Guice| start:   727ms   fetch:   747ms
+                                      Feather| start:     6ms   fetch:    39ms
+                                       Dagger| start:    74ms   fetch:    48ms
+                                         Pico| start:   115ms   fetch:   127ms
+                                        Genie| start:   658ms   fetch:    89ms
+                               jBeanBoxNormal| start:     3ms   fetch:   123ms
+                             jBeanBoxTypeSafe| start:     1ms   fetch:    40ms
+                           jBeanBoxAnnotation| start:     1ms   fetch:   106ms
+                      SpringJavaConfiguration| start:  4542ms   fetch:   621ms
+                      SpringAnnotationScanned| start:  4668ms   fetch:   757ms
 ```
 
-### Runtime benchmark
-
-```text
-Runtime benchmark, fetch bean for 499999 times:
+```
+Runtime benchmark, fetch bean for 10000 times (Prototype):
 --------------------------------------------------
- Vanilla|    47ms
-   Guice|   530ms
- Feather|   256ms
-  Dagger|   159ms
-   Genie|   153ms
-    Pico|  2055ms
-  Spring| 23294ms
+                                      Vanilla|    11ms
+                                        Guice|   153ms
+                                      Feather|    59ms
+                                       Dagger|    43ms
+                                        Genie|    52ms
+                                         Pico|   430ms
+                               jBeanBoxNormal|  3791ms
+                             jBeanBoxTypeSafe|   950ms
+                           jBeanBoxAnnotation|  4603ms
+                      SpringJavaConfiguration|  5003ms
+                      SpringAnnotationScanned|  6331ms
 ```
+
+If change configurations to Singleton (only compared jBeanBox & Spring):
+```
+Runtime benchmark, fetch bean for 100000 times:
+--------------------------------------------------
+                               jBeanBoxNormal|    47ms
+                             jBeanBoxTypeSafe|    31ms
+                           jBeanBoxAnnotation|    78ms
+                      SpringJavaConfiguration|    94ms
+                      SpringAnnotationScanned|    78ms
+```
+
 
 ## How to run the benchmark
 
-You need [maven](http://maven.apache.org/) to run the benchmark program.
+You need JDK8 and [maven](http://maven.apache.org/) to run the benchmark program.
 
 The project defined two profiles: `runtime` and `split_startup`.
 
