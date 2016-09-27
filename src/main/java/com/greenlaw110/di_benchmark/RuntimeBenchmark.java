@@ -99,31 +99,35 @@ public class RuntimeBenchmark {
 		});
 
 		if (!singleton) {
-			StopWatch.millis("jBeanBoxNormal", () -> {
-				for (int i = 0; i < iterations; ++i) {
-					jbeanboxNormal.getBean(CLS);
-				}
-			});
+			if (iterations < 500000) {
+				StopWatch.millis("jBeanBoxNormal", () -> {
+					for (int i = 0; i < iterations; ++i) {
+						jbeanboxNormal.getBean(CLS);
+					}
+				});
+			}
 			StopWatch.millis("jBeanBoxTypeSafe", () -> {
 				for (int i = 0; i < iterations; ++i) {
 					jbeanboxTypeSafe.getBean(CLS);
 				}
 			});
-			StopWatch.millis("jBeanBoxAnnotation", () -> {
-				for (int i = 0; i < iterations; ++i) {
-					jbeanboxAnnotation.getBean(CLS);
-				}
-			});
+			if (iterations < 500000) {
+				StopWatch.millis("jBeanBoxAnnotation", () -> {
+					for (int i = 0; i < iterations; ++i) {
+						jbeanboxAnnotation.getBean(CLS);
+					}
+				});
+			}
 		}
 
-		if (iterations < 500000) {
+		if (singleton || iterations < 500000) {
 			StopWatch.millis("SpringJavaConfiguration", () -> {
 				for (int i = 0; i < iterations; ++i) {
 					spring.getBean(CLS);
 				}
 			});
 		}
-		if (iterations < 500000) {
+		if (singleton || iterations < 500000) {
 			StopWatch.millis("SpringAnnotationScanned", () -> {
 				for (int i = 0; i < iterations; ++i) {
 					springScan.getBean(CLS);

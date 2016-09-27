@@ -50,7 +50,7 @@ Split Starting up DI containers & instantiating a dependency graph 4999 times:
 ### Runtime bean injection benchmark
 
 ```
-Runtime benchmark, fetch new bean for 49999 times:
+Runtime benchmark, fetch new bean for 50K times:
 ---------------------------------------------------------
                      Vanilla|     3ms
                        Guice|   188ms
@@ -66,16 +66,35 @@ Runtime benchmark, fetch new bean for 49999 times:
 ```
 
 ```
-Runtime benchmark, fetch singleton bean for 49999 times:
+Runtime benchmark, fetch new bean for 5M times:
 ---------------------------------------------------------
-                     Vanilla|     3ms
-                       Guice|    41ms
-                     Feather|    11ms
-                      Dagger|    29ms
-                       Genie|     5ms
-                        Pico|    35ms
-     SpringJavaConfiguration|    18ms
-     SpringAnnotationScanned|    15ms
+                     Vanilla|   242ms
+                       Guice|  3022ms
+                     Feather|  1748ms
+                      Dagger|   842ms
+                       Genie|  1043ms
+                        Pico| 13185ms
+              jBeanBoxNormal| Timeout
+            jBeanBoxTypeSafe| 74607ms
+          jBeanBoxAnnotation| Timeout
+     SpringJavaConfiguration| Timeout
+     SpringAnnotationScanned| Timeout
+```
+
+```
+Runtime benchmark, fetch singleton bean for 5M times:
+---------------------------------------------------------
+                     Vanilla|     5ms
+                       Guice|   510ms
+                     Feather|   175ms
+                      Dagger|   693ms
+                       Genie|   109ms
+                        Pico|   235ms
+              jBeanBoxNormal|  Failed
+            jBeanBoxTypeSafe|  Failed
+          jBeanBoxAnnotation|  Failed
+     SpringJavaConfiguration|   240ms
+     SpringAnnotationScanned|   219ms
 ```
 
 ## How to run the benchmark
