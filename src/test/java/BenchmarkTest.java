@@ -18,17 +18,16 @@ import org.springframework.context.ApplicationContext;
 
 import com.github.drinkjava2.BeanBoxContext;
 import com.google.inject.Injector;
+import com.greenlaw110.di_benchmark.DIFactory.DaggerComponent;
 import com.greenlaw110.di_benchmark.DIFactory.VanillaContainer;
 import com.greenlaw110.di_benchmark.objects.A;
-
-import dagger.ObjectGraph;
 
 public class BenchmarkTest extends Assert {
 
 	static VanillaContainer vanilla;
 	static Injector guice;
 	static Feather feather;
-	static ObjectGraph dagger;
+	static DaggerComponent dagger;
 	static PicoContainer pico;
 	static Genie genie;
 	static ApplicationContext spring;
