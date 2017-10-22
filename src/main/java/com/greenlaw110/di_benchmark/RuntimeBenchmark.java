@@ -18,10 +18,9 @@ import org.springframework.context.ApplicationContext;
 
 import com.github.drinkjava2.BeanBoxContext;
 import com.google.inject.Injector;
+import com.greenlaw110.di_benchmark.DIFactory.DaggerComponent;
 import com.greenlaw110.di_benchmark.DIFactory.VanillaContainer;
 import com.greenlaw110.di_benchmark.objects.A;
-
-import dagger.ObjectGraph;
 
 /**
  * Measures bootstrap cost of different DI tools. An iteration includes creating
@@ -37,7 +36,7 @@ public class RuntimeBenchmark {
 		VanillaContainer vanilla = vanilla();
 		Injector guice = guice();
 		Feather feather = Feather.with();
-		ObjectGraph dagger = dagger();
+		DaggerComponent dagger = dagger();
 		MutablePicoContainer pico = pico();
 		Genie genie = genie();
 		BeanBoxContext jbeanboxNormal = jbeanboxNormal();

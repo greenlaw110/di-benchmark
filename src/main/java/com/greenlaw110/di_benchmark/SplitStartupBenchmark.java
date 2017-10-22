@@ -16,10 +16,9 @@ import org.springframework.context.ApplicationContext;
 import com.github.drinkjava2.BeanBoxContext;
 import com.google.inject.Guice;
 import com.google.inject.Injector;
+import com.greenlaw110.di_benchmark.DIFactory.DaggerComponent;
 import com.greenlaw110.di_benchmark.DIFactory.VanillaContainer;
 import com.greenlaw110.di_benchmark.objects.A;
-
-import dagger.ObjectGraph;
 
 /**
  * Measures bootstrap cost of different DI tools. An iteration includes creating
@@ -63,7 +62,7 @@ public class SplitStartupBenchmark {
 		StopWatch.startAndFetch("Dagger", (start, fetch) -> {
 			for (int i = 0; i < iterations; ++i) {
 				long ms = System.currentTimeMillis();
-				ObjectGraph dagger = dagger();
+				DaggerComponent dagger = dagger();
 				long ms2 = System.currentTimeMillis();
 				start.addAndGet(ms2 - ms);
 				dagger.get(A.class);

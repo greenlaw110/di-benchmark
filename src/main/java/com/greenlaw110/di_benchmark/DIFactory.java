@@ -19,9 +19,10 @@ import com.greenlaw110.di_benchmark.configs.JBeanBoxConfig1;
 import com.greenlaw110.di_benchmark.configs.JBeanBoxConfig2;
 
 import dagger.Module;
-import dagger.ObjectGraph;
 
 import javax.inject.Provider;
+import javax.inject.Singleton;
+
 import java.util.HashMap;
 import java.util.Map;
 
@@ -105,15 +106,33 @@ public class DIFactory {
         return genie;
     }
 
-    public static ObjectGraph dagger() {
-        return ObjectGraph.create(new DaggerModule());
+    public static DaggerComponent dagger() {
+        return DaggerDIFactory_DaggerComponent.builder().build();
     }
 
-    @Module(injects = {A.class, A0.class})
+    @Module
     public static class DaggerModule {
         @dagger.Provides
         E e() {
             return new E();
+        }
+    }
+
+    @dagger.Component(modules = DaggerModule.class)
+    @Singleton
+    public interface DaggerComponent {
+        A getA();
+        A0 getA0();
+
+        @SuppressWarnings("unchecked")
+        default <T> T get(Class<T> c) {
+            if (c == A.class) {
+                return (T) getA();
+            }
+            if (c == A0.class) {
+                return (T) getA0();
+            }
+            throw new IllegalArgumentException();
         }
     }
 
