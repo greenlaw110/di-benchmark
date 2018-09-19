@@ -10,16 +10,16 @@ import static com.greenlaw110.di_benchmark.DIFactory.pico;
 import static com.greenlaw110.di_benchmark.DIFactory.spring;
 import static com.greenlaw110.di_benchmark.DIFactory.vanilla;
 
-import com.greenlaw110.di_benchmark.objects.A0;
 import org.codejargon.feather.Feather;
 import org.osgl.inject.Genie;
 import org.picocontainer.MutablePicoContainer;
 import org.springframework.context.ApplicationContext;
 
-import com.github.drinkjava2.BeanBoxContext;
+import com.github.drinkjava2.jbeanbox.BeanBoxContext;
 import com.google.inject.Injector;
 import com.greenlaw110.di_benchmark.DIFactory.VanillaContainer;
 import com.greenlaw110.di_benchmark.objects.A;
+import com.greenlaw110.di_benchmark.objects.A0;
 
 import dagger.ObjectGraph;
 

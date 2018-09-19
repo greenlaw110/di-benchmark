@@ -7,16 +7,13 @@ import javax.inject.Inject;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
-import com.github.drinkjava2.BeanBox;
-import com.github.drinkjava2.InjectBox;
+import com.github.drinkjava2.jbeanbox.BeanBox;
 
-@InjectBox(prototype = true) // for jBeanBox usage
 @Component // for Spring usage
 @Scope("prototype") // for Spring usage
 public class D2 {
 	private final E e;
 
-	@InjectBox // for jBeanBox
 	@Inject // for JSR330 compliant DI libraries
 	public D2(E e) {
 		this.e = e;

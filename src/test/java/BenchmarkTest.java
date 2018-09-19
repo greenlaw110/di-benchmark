@@ -16,7 +16,7 @@ import org.osgl.inject.Genie;
 import org.picocontainer.PicoContainer;
 import org.springframework.context.ApplicationContext;
 
-import com.github.drinkjava2.BeanBoxContext;
+import com.github.drinkjava2.jbeanbox.BeanBoxContext;
 import com.google.inject.Injector;
 import com.greenlaw110.di_benchmark.DIFactory.VanillaContainer;
 import com.greenlaw110.di_benchmark.objects.A;

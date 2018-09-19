@@ -1,7 +1,8 @@
 package com.greenlaw110.di_benchmark.configs;
 
-import com.github.drinkjava2.BeanBox;
-import com.github.drinkjava2.BeanBoxContext;
+import com.github.drinkjava2.jbeanbox.BeanBox;
+import com.github.drinkjava2.jbeanbox.BeanBoxContext;
+import com.github.drinkjava2.jbeanbox.Caller;
 import com.greenlaw110.di_benchmark.objects.A;
 import com.greenlaw110.di_benchmark.objects.A0;
 import com.greenlaw110.di_benchmark.objects.B;
@@ -11,55 +12,58 @@ import com.greenlaw110.di_benchmark.objects.D2;
 import com.greenlaw110.di_benchmark.objects.E;
 
 public class JBeanBoxConfig2 {
-
-	public static class ProtoTypeBox extends BeanBox {
-		{this.setPrototype(true);}
-	}
-
-	public static class ABox extends ProtoTypeBox { 
-		public A create() {
-			return new A(context.getBean(B.class));
-		}
-	}
-	
-	public static class A0Box extends BeanBox { 
-		public A0 create() {
-			return new A0(context.getBean(B.class));
+	public static class PrototypeBox extends BeanBox {
+		{
+			this.setSingleton(false);
 		}
 	}
 
-	public static class BBox extends ProtoTypeBox { 
-		public B create() {
-			return new B(context.getBean(C.class));
+	public static class ABox extends PrototypeBox {
+		Object create(Caller caller) {
+			return new A((B) caller.getBean(BBox.class));
 		}
 	}
 
-	public static class CBox extends ProtoTypeBox { 
-		public C create() {
-			return new C(context.getBean(D1.class), context.getBean(D2.class));
+	public static class A0Box extends BeanBox {// Singleton
+		Object create(Caller caller) {
+			return new A0(caller.getBean(BBox.class));
 		}
 	}
 
-	public static class D1Box extends ProtoTypeBox { 
-		public D1 create() {
-			return new D1(context.getBean(E.class));
+	public static class BBox extends PrototypeBox {
+		Object create(Caller caller) {
+			return new B((C) caller.getBean(CBox.class));
 		}
 	}
 
-	public static class D2Box extends ProtoTypeBox { 
-		public D2 create() {
-			return new D2(context.getBean(E.class));
+	public static class CBox extends PrototypeBox {
+		Object create(Caller caller) {
+			return new C((D1) caller.getBean(D1Box.class), (D2) caller.getBean(D2Box.class));
 		}
 	}
 
-	public static class EBox extends ProtoTypeBox { 
-		public E create() {
+	public static class D1Box extends PrototypeBox {
+		Object create(Caller caller) {
+			return new D1((E) caller.getBean(EBox.class));
+		}
+	}
+
+	public static class D2Box extends PrototypeBox {
+		Object create(Caller caller) {
+			return new D2((E) caller.getBean(EBox.class));
+		}
+	}
+
+	public static class EBox extends PrototypeBox {
+		Object create() {
 			return new E();
 		}
 	}
 
 	public static void main(String[] args) {
-		BeanBoxContext ctx = new BeanBoxContext(JBeanBoxConfig2.class).setIgnoreAnnotation(true);
-		ctx.getBean(A.class);
+		BeanBoxContext ctx = new BeanBoxContext();
+		ctx.setAllowAnnotation(false);
+		A a = ctx.getBean(ABox.class);
+		System.out.println(a);
 	}
 }
