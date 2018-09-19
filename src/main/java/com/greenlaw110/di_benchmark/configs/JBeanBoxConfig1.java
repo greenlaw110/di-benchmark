@@ -24,7 +24,7 @@ public class JBeanBoxConfig1 {
 		}
 	}
 
-	public static class A0Box extends BeanBox { // Singleton
+	public static class ABox0 extends BeanBox { // Singleton
 		{
 			injectConstruct(A.class, B.class, inject(BBox.class));
 		}

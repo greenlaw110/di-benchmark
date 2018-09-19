@@ -24,7 +24,7 @@ public class JBeanBoxConfig2 {
 		}
 	}
 
-	public static class A0Box extends BeanBox {// Singleton
+	public static class ABox0 extends BeanBox {// Singleton
 		Object create(Caller caller) {
 			return new A0(caller.getBean(BBox.class));
 		}

@@ -18,6 +18,8 @@ import org.springframework.context.ApplicationContext;
 import com.github.drinkjava2.jbeanbox.BeanBoxContext;
 import com.google.inject.Injector;
 import com.greenlaw110.di_benchmark.DIFactory.VanillaContainer;
+import com.greenlaw110.di_benchmark.configs.JBeanBoxConfig1.ABox;
+import com.greenlaw110.di_benchmark.configs.JBeanBoxConfig1.ABox0;
 import com.greenlaw110.di_benchmark.objects.A;
 import com.greenlaw110.di_benchmark.objects.A0;
 
@@ -98,27 +100,27 @@ public class RuntimeBenchmark {
 			}
 		});
 
-		//if (!singleton) {
-			if (singleton || iterations < 500000) {
-				StopWatch.millis("jBeanBoxNormal", () -> {
-					for (int i = 0; i < iterations; ++i) {
-						jbeanboxNormal.getBean(CLS);
-					}
-				});
+		Class<?> configBox1 = singleton ? com.greenlaw110.di_benchmark.configs.JBeanBoxConfig1.ABox0.class
+				: com.greenlaw110.di_benchmark.configs.JBeanBoxConfig1.ABox.class;
+		StopWatch.millis("jBeanBoxNormal", () -> {
+			for (int i = 0; i < iterations; ++i) {
+				jbeanboxNormal.getBean(configBox1);
 			}
-			StopWatch.millis("jBeanBoxTypeSafe", () -> {
-				for (int i = 0; i < iterations; ++i) {
-					jbeanboxTypeSafe.getBean(CLS);
-				}
-			});
-			if (singleton || iterations < 500000) {
-				StopWatch.millis("jBeanBoxAnnotation", () -> {
-					for (int i = 0; i < iterations; ++i) {
-						jbeanboxAnnotation.getBean(CLS);
-					}
-				});
+		});
+
+		Class<?> configBox2 = singleton ? com.greenlaw110.di_benchmark.configs.JBeanBoxConfig2.ABox0.class
+				: com.greenlaw110.di_benchmark.configs.JBeanBoxConfig2.ABox.class;
+		StopWatch.millis("jBeanBoxTypeSafe", () -> {
+			for (int i = 0; i < iterations; ++i) {
+				jbeanboxTypeSafe.getBean(configBox2);
 			}
-		//}
+		});
+
+		StopWatch.millis("jBeanBoxAnnotation", () -> {
+			for (int i = 0; i < iterations; ++i) {
+				jbeanboxAnnotation.getBean(CLS);
+			}
+		});
 
 		if (singleton || iterations < 500000) {
 			StopWatch.millis("SpringJavaConfiguration", () -> {
