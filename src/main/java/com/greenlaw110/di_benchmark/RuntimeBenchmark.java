@@ -122,14 +122,14 @@ public class RuntimeBenchmark {
 			}
 		});
 
-		if (singleton || iterations < 500000) {
+		if (singleton || iterations < 5000000) {
 			StopWatch.millis("SpringJavaConfiguration", () -> {
 				for (int i = 0; i < iterations; ++i) {
 					spring.getBean(CLS);
 				}
 			});
 		}
-		if (singleton || iterations < 500000) {
+		if (singleton || iterations < 5000000) {
 			StopWatch.millis("SpringAnnotationScanned", () -> {
 				for (int i = 0; i < iterations; ++i) {
 					springScan.getBean(CLS);
