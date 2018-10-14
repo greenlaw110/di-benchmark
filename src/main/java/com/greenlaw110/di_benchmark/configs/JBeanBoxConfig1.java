@@ -38,7 +38,7 @@ public class JBeanBoxConfig1 {
 
 	public static class CBox extends PrototypeBox {
 		{
-			injectConstruct(C.class, D1.class, D2.class, inject(D1Box.class), inject(D2Box.class));
+			injectConstruct(C.class, D1.class, D2.class,  D1Box.class , inject(D2Box.class));
 		}
 	}
 

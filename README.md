@@ -8,7 +8,7 @@ This project benchmark the following DI solutions:
 * [Feather](https://github.com/zsoltherpai/feather) - 1.0
 * [Dagger](https://github.com/square/dagger) - 1.2.5
 * [Pico](http://picocontainer.com/) - 2.15
-* [jBeanBox](https://github.com/drinkjava2/jBeanBox) - 2.4.8
+* [jBeanBox](https://github.com/drinkjava2/jBeanBox) - 2.4.9
 * [Spring](http://projects.spring.io/spring-framework/) - 4.3.2.RELEASE
 
 ## Object Graph
