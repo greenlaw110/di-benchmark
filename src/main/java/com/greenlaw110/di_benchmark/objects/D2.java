@@ -7,7 +7,7 @@ import javax.inject.Inject;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
-import com.github.drinkjava2.jbeanbox.BeanBox;
+import com.github.drinkjava2.jbeanbox.JBEANBOX;
 
 @Component // for Spring usage
 @Scope("prototype") // for Spring usage
@@ -40,6 +40,6 @@ public class D2 {
 	}
 
 	public static void main(String[] args) {
-		BeanBox.getBean(A.class);
+		JBEANBOX.getBean(A.class);
 	}
 }

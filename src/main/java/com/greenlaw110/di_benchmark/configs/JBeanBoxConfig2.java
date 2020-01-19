@@ -2,7 +2,6 @@ package com.greenlaw110.di_benchmark.configs;
 
 import com.github.drinkjava2.jbeanbox.BeanBox;
 import com.github.drinkjava2.jbeanbox.BeanBoxContext;
-import com.github.drinkjava2.jbeanbox.Caller;
 import com.greenlaw110.di_benchmark.objects.A;
 import com.greenlaw110.di_benchmark.objects.A0;
 import com.greenlaw110.di_benchmark.objects.B;
@@ -19,43 +18,43 @@ public class JBeanBoxConfig2 {
 	}
 
 	public static class ABox extends PrototypeBox {
-		Object create(Caller caller) {
+		public Object create(BeanBoxContext caller) {
 			return new A((B) caller.getBean(BBox.class));
 		}
 	}
 
 	public static class ABox0 extends BeanBox {// Singleton
-		Object create(Caller caller) {
+		public Object create(BeanBoxContext caller) {
 			return new A0(caller.getBean(BBox.class));
 		}
 	}
 
 	public static class BBox extends PrototypeBox {
-		Object create(Caller caller) {
+		public Object create(BeanBoxContext caller) {
 			return new B((C) caller.getBean(CBox.class));
 		}
 	}
 
 	public static class CBox extends PrototypeBox {
-		Object create(Caller caller) {
+		public Object create(BeanBoxContext caller) {
 			return new C((D1) caller.getBean(D1Box.class), (D2) caller.getBean(D2Box.class));
 		}
 	}
 
 	public static class D1Box extends PrototypeBox {
-		Object create(Caller caller) {
+		public Object create(BeanBoxContext caller) {
 			return new D1((E) caller.getBean(EBox.class));
 		}
 	}
 
 	public static class D2Box extends PrototypeBox {
-		Object create(Caller caller) {
+		public Object create(BeanBoxContext caller) {
 			return new D2((E) caller.getBean(EBox.class));
 		}
 	}
 
 	public static class EBox extends PrototypeBox {
-		Object create() {
+		public Object create() {
 			return new E();
 		}
 	}

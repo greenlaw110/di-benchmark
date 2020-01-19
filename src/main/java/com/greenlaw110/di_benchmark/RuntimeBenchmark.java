@@ -18,8 +18,6 @@ import org.springframework.context.ApplicationContext;
 import com.github.drinkjava2.jbeanbox.BeanBoxContext;
 import com.google.inject.Injector;
 import com.greenlaw110.di_benchmark.DIFactory.VanillaContainer;
-import com.greenlaw110.di_benchmark.configs.JBeanBoxConfig1.ABox;
-import com.greenlaw110.di_benchmark.configs.JBeanBoxConfig1.ABox0;
 import com.greenlaw110.di_benchmark.objects.A;
 import com.greenlaw110.di_benchmark.objects.A0;
 
@@ -140,9 +138,9 @@ public class RuntimeBenchmark {
 	}
 
 	private void benchmarkExplanation(int iterations, boolean singleton) {
-		System.out.println(String.format("Runtime benchmark, fetch %s bean for %s times:\n%s",
-				singleton ? "singleton" : "new", iterations,
-				"---------------------------------------------------------"));
+		System.out.println(
+				String.format("Runtime benchmark, fetch %s bean for %s times:\n%s", singleton ? "singleton" : "new",
+						iterations, "---------------------------------------------------------"));
 	}
 
 }

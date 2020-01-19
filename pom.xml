@@ -79,8 +79,8 @@
     </dependency>
     <dependency>
       <groupId>com.github.drinkjava2</groupId>
-      <artifactId>jbeanbox</artifactId> <!--or jbeanboxdi -->
-      <version>2.4.9</version>
+      <artifactId>jbeanbox</artifactId>
+      <version>4.0</version>
     </dependency>
   </dependencies>
 
