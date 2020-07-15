@@ -10,16 +10,16 @@ import static com.greenlaw110.di_benchmark.DIFactory.pico;
 import static com.greenlaw110.di_benchmark.DIFactory.spring;
 import static com.greenlaw110.di_benchmark.DIFactory.vanilla;
 
-import com.greenlaw110.di_benchmark.objects.A0;
 import org.codejargon.feather.Feather;
 import org.osgl.inject.Genie;
 import org.picocontainer.MutablePicoContainer;
 import org.springframework.context.ApplicationContext;
 
-import com.github.drinkjava2.BeanBoxContext;
+import com.github.drinkjava2.jbeanbox.BeanBoxContext;
 import com.google.inject.Injector;
 import com.greenlaw110.di_benchmark.DIFactory.VanillaContainer;
 import com.greenlaw110.di_benchmark.objects.A;
+import com.greenlaw110.di_benchmark.objects.A0;
 
 import dagger.ObjectGraph;
 
@@ -98,36 +98,36 @@ public class RuntimeBenchmark {
 			}
 		});
 
-		//if (!singleton) {
-			if (singleton || iterations < 500000) {
-				StopWatch.millis("jBeanBoxNormal", () -> {
-					for (int i = 0; i < iterations; ++i) {
-						jbeanboxNormal.getBean(CLS);
-					}
-				});
+		Class<?> configBox1 = singleton ? com.greenlaw110.di_benchmark.configs.JBeanBoxConfig1.ABox0.class
+				: com.greenlaw110.di_benchmark.configs.JBeanBoxConfig1.ABox.class;
+		StopWatch.millis("jBeanBoxNormal", () -> {
+			for (int i = 0; i < iterations; ++i) {
+				jbeanboxNormal.getBean(configBox1);
 			}
-			StopWatch.millis("jBeanBoxTypeSafe", () -> {
-				for (int i = 0; i < iterations; ++i) {
-					jbeanboxTypeSafe.getBean(CLS);
-				}
-			});
-			if (singleton || iterations < 500000) {
-				StopWatch.millis("jBeanBoxAnnotation", () -> {
-					for (int i = 0; i < iterations; ++i) {
-						jbeanboxAnnotation.getBean(CLS);
-					}
-				});
-			}
-		//}
+		});
 
-		if (singleton || iterations < 500000) {
+		Class<?> configBox2 = singleton ? com.greenlaw110.di_benchmark.configs.JBeanBoxConfig2.ABox0.class
+				: com.greenlaw110.di_benchmark.configs.JBeanBoxConfig2.ABox.class;
+		StopWatch.millis("jBeanBoxTypeSafe", () -> {
+			for (int i = 0; i < iterations; ++i) {
+				jbeanboxTypeSafe.getBean(configBox2);
+			}
+		});
+
+		StopWatch.millis("jBeanBoxAnnotation", () -> {
+			for (int i = 0; i < iterations; ++i) {
+				jbeanboxAnnotation.getBean(CLS);
+			}
+		});
+
+		if (singleton || iterations < 5000000) {
 			StopWatch.millis("SpringJavaConfiguration", () -> {
 				for (int i = 0; i < iterations; ++i) {
 					spring.getBean(CLS);
 				}
 			});
 		}
-		if (singleton || iterations < 500000) {
+		if (singleton || iterations < 5000000) {
 			StopWatch.millis("SpringAnnotationScanned", () -> {
 				for (int i = 0; i < iterations; ++i) {
 					springScan.getBean(CLS);
@@ -138,9 +138,9 @@ public class RuntimeBenchmark {
 	}
 
 	private void benchmarkExplanation(int iterations, boolean singleton) {
-		System.out.println(String.format("Runtime benchmark, fetch %s bean for %s times:\n%s",
-				singleton ? "singleton" : "new", iterations,
-				"---------------------------------------------------------"));
+		System.out.println(
+				String.format("Runtime benchmark, fetch %s bean for %s times:\n%s", singleton ? "singleton" : "new",
+						iterations, "---------------------------------------------------------"));
 	}
 
 }

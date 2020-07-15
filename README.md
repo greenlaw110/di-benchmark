@@ -8,7 +8,7 @@ This project benchmark the following DI solutions:
 * [Feather](https://github.com/zsoltherpai/feather) - 1.0
 * [Dagger](https://github.com/square/dagger) - 1.2.5
 * [Pico](http://picocontainer.com/) - 2.15
-* [jBeanBox](https://github.com/drinkjava2/jBeanBox) - 2.4.1
+* [jBeanBox](https://github.com/drinkjava2/jBeanBox) - 2.4.9
 * [Spring](http://projects.spring.io/spring-framework/) - 4.3.2.RELEASE
 
 ## Object Graph
@@ -34,67 +34,51 @@ All injection is done through Constructor injection
 ```
 Split Starting up DI containers & instantiating a dependency graph 4999 times:
 -------------------------------------------------------------------------------
-                     Vanilla| start:     3ms   fetch:     5ms
-                       Guice| start:   458ms   fetch:   800ms
-                     Feather| start:     8ms   fetch:    73ms
-                      Dagger| start:    46ms   fetch:   130ms
-                        Pico| start:   166ms   fetch:   161ms
-                       Genie| start:   478ms   fetch:    98ms
-              jBeanBoxNormal| start:     7ms   fetch:   339ms
-            jBeanBoxTypeSafe| start:     3ms   fetch:   162ms
-          jBeanBoxAnnotation| start:     4ms   fetch:   597ms
-     SpringJavaConfiguration| start: 13956ms   fetch:  1149ms
-     SpringAnnotationScanned| start: 22302ms   fetch:  2738ms
+                     Vanilla| start:     0ms   fetch:     0ms
+                       Guice| start:  1046ms   fetch:  1560ms
+                     Feather| start:     0ms   fetch:   109ms
+                      Dagger| start:    46ms   fetch:   173ms
+                        Pico| start:   376ms   fetch:   217ms
+                       Genie| start:   766ms   fetch:   247ms
+              jBeanBoxNormal| start:    79ms   fetch:   982ms
+            jBeanBoxTypeSafe| start:     0ms   fetch:   998ms
+          jBeanBoxAnnotation| start:     0ms   fetch:   468ms
+     SpringJavaConfiguration| start: 51831ms   fetch:  1834ms
+     SpringAnnotationScanned| start: 70712ms   fetch:  4155ms
 ```
 
 ### Runtime bean injection benchmark
 
 ```
-Runtime benchmark, fetch new bean for 50K times:
+Runtime benchmark, fetch new bean for 500000 times:
 ---------------------------------------------------------
-                     Vanilla|     3ms
-                       Guice|   188ms
-                     Feather|    68ms
-                      Dagger|    28ms
-                       Genie|    45ms
-                        Pico|   353ms
-              jBeanBoxNormal|  1698ms
-            jBeanBoxTypeSafe|   880ms
-          jBeanBoxAnnotation|  2591ms
-     SpringJavaConfiguration|  1936ms
-     SpringAnnotationScanned|  2369ms
+                     Vanilla|    31ms
+                       Guice|  1154ms
+                     Feather|   624ms
+                      Dagger|   312ms
+                       Genie|   609ms
+                        Pico|  4555ms
+              jBeanBoxNormal|  2075ms
+            jBeanBoxTypeSafe|  2371ms
+          jBeanBoxAnnotation|  2059ms
+     SpringJavaConfiguration| 92149ms
+     SpringAnnotationScanned| 95504ms
 ```
 
 ```
-Runtime benchmark, fetch new bean for 5M times:
+Runtime benchmark, fetch singleton bean for 5000000 times:
 ---------------------------------------------------------
-                     Vanilla|   242ms
-                       Guice|  3022ms
-                     Feather|  1748ms
-                      Dagger|   842ms
-                       Genie|  1043ms
-                        Pico| 13185ms
-              jBeanBoxNormal| Timeout
-            jBeanBoxTypeSafe| 74607ms
-          jBeanBoxAnnotation| Timeout
-     SpringJavaConfiguration| Timeout
-     SpringAnnotationScanned| Timeout
-```
-
-```
-Runtime benchmark, fetch singleton bean for 5M times:
----------------------------------------------------------
-                     Vanilla|     5ms
-                       Guice|   559ms
-                     Feather|   180ms
-                      Dagger|   746ms
-                       Genie|   118ms
-                        Pico|   225ms
-              jBeanBoxNormal|    59ms
-            jBeanBoxTypeSafe|    59ms
-          jBeanBoxAnnotation|   105ms
-     SpringJavaConfiguration|   245ms
-     SpringAnnotationScanned|   228ms
+                     Vanilla|    47ms
+                       Guice|  1950ms
+                     Feather|   624ms
+                      Dagger|  2746ms
+                       Genie|   327ms
+                        Pico|  3385ms
+              jBeanBoxNormal|   188ms
+            jBeanBoxTypeSafe|   187ms
+          jBeanBoxAnnotation|   171ms
+     SpringJavaConfiguration|  1061ms
+     SpringAnnotationScanned|  1045ms
 ```
 
 ## How to run the benchmark
